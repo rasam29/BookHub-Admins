@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">BookHubAdmins</string>
+    <string name="authKey" >کد احزار هویت که بوک هاب در اختیار شما قرار داده است را وارد کنید!!</string>
+    <string name="authKey_title">کد احراز هویت!</string>
+    <string name="phoneNumber_title">تلفن همراه خود را وارد کنید</string>
+    <string name="report_code_smsed">به شماره موبایل شما یک کد 4 رقمی ارسال شده است</string>
+    <string name="name_familyName">برای تکمیل ثبت نام نام و نام خوانوادگی را وارد کنید</string>
+    <string name="block_massage" >متاسفانه شما اجازه ی ورود ندارین! با پشتیبانی بوک هاب تماس بگیرین!</string>
+</resources>

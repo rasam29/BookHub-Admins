@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/mainColor"
+
+    android:layout_alignParentBottom="true"
+    android:orientation="horizontal"
+    android:padding="10dp">
+
+
+    <me.grantland.widget.AutofitTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="left"
+        android:text="تلاش مجدد!"
+        android:id="@+id/retry_button_snackBar"
+        android:textColor="@android:color/black" />
+
+    <me.grantland.widget.AutofitTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:gravity="right"
+        android:text="خطا در ارتباط با سرور"
+        android:textColor="@android:color/white" />
+
+</RelativeLayout>
