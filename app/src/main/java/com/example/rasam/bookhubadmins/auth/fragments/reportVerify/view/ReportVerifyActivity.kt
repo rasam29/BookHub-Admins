@@ -52,12 +52,12 @@ class ReportVerifyActivity : ParentActivity<ReportVerifyView, ReportVerification
     }
 
     override fun onTextChanged(chars: CharSequence?, p1: Int, p2: Int, p3: Int) {
-        if (chars != null) {
-            if (chars.length == 4) {
+
+            if (verify_container.text.length == 4) {
                 presenter.sendCodeToServer(chars.toString(), context)
             }
 
-        }
+
     }
 
     override fun render(viewState: ReportViewState?) {

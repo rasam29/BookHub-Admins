@@ -12,6 +12,7 @@ import android.widget.Toast
 import com.example.rasam.bookhubadmins.R
 import com.example.rasam.bookhubadmins.main.Bussiness.MainIntractorImple
 import com.example.rasam.bookhubadmins.main.Bussiness.MainState
+import com.example.rasam.bookhubadmins.main.presenter.MainDependency
 import com.example.rasam.bookhubadmins.main.presenter.MainPresenter
 import com.example.rasam.bookhubadmins.main.view.mainList.MainAdapter
 import com.example.rasam.bookhubadmins.main.view.mainList.OnSwipeButtonClicked
@@ -71,10 +72,12 @@ class MainActivity : MainView, ParentActivity<MainView, MainPresenter>(),OnSwipe
             refreshList(mainState.list)
         } else if (mainState is MainState.DeleteState) {
             Toast.makeText(context, "آگهی با موفقیت پاک شد", Toast.LENGTH_SHORT).show()
+            deleteAds(mainState.ads)
         } else if (mainState is MainState.NextPaginationState) {
             appendListToRecyclerView(mainState.list)
         } else if (mainState is MainState.PromoteState) {
             Toast.makeText(context, "آگهی تایید شد", Toast.LENGTH_SHORT).show()
+            deleteAds(mainState.ads)
         } else throw IllegalArgumentException("wrong state in main")
     }
 
@@ -90,12 +93,16 @@ class MainActivity : MainView, ParentActivity<MainView, MainPresenter>(),OnSwipe
     }
 
     override fun appendListToRecyclerView(adsList: MutableList<Ads>?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        adapter.appendList(adsList)
     }
 
     override fun refreshList(adsList: MutableList<Ads>?) {
-
+        adapter.refreshList(adsList)
     }
+    fun deleteAds(ads:Ads){
+        adapter.delete(ads)
+    }
+
 
 
     override fun showLoading() {
@@ -103,7 +110,7 @@ class MainActivity : MainView, ParentActivity<MainView, MainPresenter>(),OnSwipe
     }
 
     override fun stablishPresenter(): MainPresenter {
-        return MainPresenter(this,MainIntractorImple(DAQ(),RequestManager()))
+        return MainPresenter(this,MainDependency.inject())
     }
 
 

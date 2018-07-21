@@ -60,4 +60,7 @@ dependencies {
     }
 
     compile "com.daimajia.swipelayout:library:1.2.0@aar"
+
+
+    compile 'com.github.thorbenprimke:realm-recyclerview:0.9.25'
 }

@@ -9,11 +9,14 @@ import com.example.rasam.bookhubadmins.maintanance.infraStructure.net.requestAct
 import com.example.rasam.bookhubadmins.maintanance.infraStructure.net.requestActions.SplashRequests;
 import com.example.rasam.bookhubadmins.pojos.UpdateModel;
 import com.example.rasam.bookhubadmins.pojos.ads.Ads;
+import com.example.rasam.bookhubadmins.pojos.ads.Book;
 import com.example.rasam.bookhubadmins.pojos.authModels.AuthKeyVerify;
 import com.example.rasam.bookhubadmins.pojos.authModels.DeviceRegisterModel;
 import com.example.rasam.bookhubadmins.pojos.authModels.RegisterModel;
 import com.example.rasam.bookhubadmins.pojos.authModels.ReportVerificationModel;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class RequestManager implements SplashRequests,AuthKeyRequests,CompleteAuthRequests,ReportVerificationRequest,RegisterRequest,MainRequests{
@@ -71,6 +74,9 @@ public class RequestManager implements SplashRequests,AuthKeyRequests,CompleteAu
 
     @Override
     public void getNextPsge(int lastItem, OnRequestDone<List<Ads>> onRequestDone) {
+
+
+        onRequestDone.onResponse(new ResponseModel<List<Ads>>(200, Collections.<Ads>emptyList()));
 
     }
 }
