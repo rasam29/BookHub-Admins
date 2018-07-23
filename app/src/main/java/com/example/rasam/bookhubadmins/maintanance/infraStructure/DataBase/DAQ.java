@@ -13,7 +13,7 @@ public class DAQ implements AuthKeyDAO,MainDataBaseActions {
 
     @Override
     public void deleteAuthKey(OnDAOJobFinish<AuthKey> onDone) {
-        //todo implement later on
+
     }
 
     @Override
@@ -41,6 +41,7 @@ public class DAQ implements AuthKeyDAO,MainDataBaseActions {
             authKey.save();
             onDAO.onDone(new DataBaseModel<AuthKey>(authKey, true));
         } catch (Exception e) {
+            e.printStackTrace();
             onDAO.onDone(new DataBaseModel(e.getCause()));
         }
     }
@@ -48,11 +49,25 @@ public class DAQ implements AuthKeyDAO,MainDataBaseActions {
 
     @Override
     public void saveDeletedAds(Ads ads, OnDAOJobFinish<Void> onDAOJobFinish) {
-
+        try {
+            ads.setPromoted(false);
+            ads.save();
+            onDAOJobFinish.onDone(new DataBaseModel<Void>(true));
+        }catch (Exception e){
+            onDAOJobFinish.onDone(new DataBaseModel<Void>(e.getCause()));
+        }
     }
 
     @Override
     public void savePromotedAds(Ads ads, OnDAOJobFinish<Void> onDAOJobFinish) {
-
+        try {
+            ads.setPromoted(true);
+            ads.save();
+            onDAOJobFinish.onDone(new DataBaseModel<Void>(true));
+        }catch (Exception e){
+            onDAOJobFinish.onDone(new DataBaseModel<Void>(e.getCause()));
+        }
     }
+
+
 }

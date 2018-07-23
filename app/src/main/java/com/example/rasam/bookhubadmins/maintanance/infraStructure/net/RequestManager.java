@@ -10,73 +10,100 @@ import com.example.rasam.bookhubadmins.maintanance.infraStructure.net.requestAct
 import com.example.rasam.bookhubadmins.pojos.UpdateModel;
 import com.example.rasam.bookhubadmins.pojos.ads.Ads;
 import com.example.rasam.bookhubadmins.pojos.ads.Book;
+import com.example.rasam.bookhubadmins.pojos.ads.User;
 import com.example.rasam.bookhubadmins.pojos.authModels.AuthKeyVerify;
 import com.example.rasam.bookhubadmins.pojos.authModels.DeviceRegisterModel;
 import com.example.rasam.bookhubadmins.pojos.authModels.RegisterModel;
 import com.example.rasam.bookhubadmins.pojos.authModels.ReportVerificationModel;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-public class RequestManager implements SplashRequests,AuthKeyRequests,CompleteAuthRequests,ReportVerificationRequest,RegisterRequest,MainRequests{
-    public void checkForUpdate(OnRequestDone<UpdateModel> onRequestDone){
+public class RequestManager implements SplashRequests, AuthKeyRequests, CompleteAuthRequests, ReportVerificationRequest, RegisterRequest, MainRequests {
+    public void checkForUpdate(OnRequestDone<UpdateModel> onRequestDone) {
         //todo call the backend whenever the back end is ready
-        onRequestDone.onResponse(new ResponseModel<>(200,new UpdateModel(false,null,null)));
+        onRequestDone.onResponse(new ResponseModel<>(200, new UpdateModel(false, null, null)));
     }
 
 
     @Override
     public void userRegister(RegisterModel registerModel, OnRequestDone<Void> onRequestDone) {
-        onRequestDone.onResponse(new ResponseModel<Void>(200,null));
+        onRequestDone.onResponse(new ResponseModel<Void>(200, null));
     }
 
     @Override
     public void deviceRegister(DeviceRegisterModel registerModel, OnRequestDone<Void> onRequestDone) {
-        onRequestDone.onResponse(new ResponseModel<Void>(200,null));
+        onRequestDone.onResponse(new ResponseModel<Void>(200, null));
 
     }
 
     @Override
     public void sendAuthKeyToServer(AuthKeyVerify authKey, OnRequestDone<Void> onRequestDone) {
-        onRequestDone.onResponse(new ResponseModel<Void>(200,null));
+        onRequestDone.onResponse(new ResponseModel<Void>(200, null));
     }
 
 
-
     @Override
-    public void verifyReport(ReportVerificationModel reportModel, OnRequestDone<Void> onRequestDone) {
-        onRequestDone.onResponse(new ResponseModel<Void>(200,null));
+    public void verifyReport(ReportVerificationModel reportModel, OnRequestDone<String> onRequestDone) {
+        onRequestDone.onResponse(new ResponseModel<>(200, "YourAythRsisfjkgnj wuj2398432ui4iu24jh"));
 
     }
 
 
     @Override
     public void completeAuth(CompleteAuthRequests completeAuth, OnRequestDone<String> onRequestDone) {
-        onRequestDone.onResponse(new ResponseModel<String>(200,"(MockToken)Bearer LHkjLKjHlKJHSLNjlkjlJHlkjHLKjHlkjHLkjhkljHJlkjhlkJHLKjhLKjhlkjhLK"));
+        onRequestDone.onResponse(new ResponseModel<>(200, "(MockToken)Bearer LHkjLKjHlKJHSLNjlkjlJHlkjHLKjHlkjHLkjhkljHJlkjhlkJHLKjhLKjhlkjhLK"));
+
+    }
+
+
+    @Override
+    public void deleteAds(String adsId, OnRequestDone<Void> onRequestDone) {
+        onRequestDone.onResponse(new ResponseModel<Void>(200, null));
 
     }
 
     @Override
-    public void deleteAds(int adsId, OnRequestDone<Void> onRequestDone) {
-
-    }
-
-    @Override
-    public void promoteAds(int adsId, OnRequestDone<Void> onRequestDone) {
-
+    public void promoteAds(String adsId, OnRequestDone<Void> onRequestDone) {
+        onRequestDone.onResponse(new ResponseModel<Void>(200, null));
     }
 
     @Override
     public void refreshList(OnRequestDone<List<Ads>> onRequestDone) {
+        onRequestDone.onResponse(new ResponseModel<List<Ads>>(200, getMockAds()));
 
     }
 
     @Override
     public void getNextPsge(int lastItem, OnRequestDone<List<Ads>> onRequestDone) {
 
-
-        onRequestDone.onResponse(new ResponseModel<List<Ads>>(200, Collections.<Ads>emptyList()));
+        onRequestDone.onResponse(new ResponseModel<List<Ads>>(200, getMockAds()));
 
     }
+
+    private List<Ads> getMockAds() {
+        List<Ads> adsList = new ArrayList<>();
+        Book book = new Book.BookBuilder()
+                .setAuthor("Robert C Martin")
+                .setName("Clean code")
+                .setNumberOfPages(350)
+                .setPrice(3500)
+                .setShabak("ldfksnndfjdvnd")
+                .build();
+
+        User user = new User.UserBuilder()
+                .Name("Rasam")
+                .FamilyName("Ararbzadeh")
+                .Location("tehran")
+                .PhoneNumber("09193078323")
+                .ProfilePicture("")
+                .UserId("sjnflkdfjns")
+                .build();
+        for (int i = 0; i < 20; i++) {
+            adsList.add(new Ads(book, "تهران خیابان عشق", user, 1000));
+        }
+
+        return adsList;
+    }
+
 }

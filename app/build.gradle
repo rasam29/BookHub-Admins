@@ -54,10 +54,7 @@ dependencies {
     compile 'me.grantland:autofittextview:0.2.+'
     implementation 'com.android.support:design:26.1.0'
 
-    dependencies {
-        compile 'com.mxn.soul:flowingdrawer-core:2.0.0'
-        compile 'com.nineoldandroids:library:2.4.0'
-    }
+
 
     compile "com.daimajia.swipelayout:library:1.2.0@aar"
 

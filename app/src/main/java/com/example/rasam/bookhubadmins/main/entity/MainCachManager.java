@@ -1,10 +1,10 @@
 package com.example.rasam.bookhubadmins.main.entity;
 
+import com.example.rasam.bookhubadmins.pojos.ads.Ads;
+
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.Stack;
 
 /**
  * Created by R.Arabzadeh Taktell on 7/18/2018.
@@ -12,6 +12,22 @@ import java.util.Stack;
 public class MainCachManager {
     private int lastItemNumber;
     private List items;
+
+    private Ads selectedAdvertismentID;
+
+
+
+
+    public Ads getSelectedAdvertisment() {
+        return selectedAdvertismentID;
+    }
+
+    public void setSelectedAdvertismentID(Ads selectedAdvertisment) {
+        this.selectedAdvertismentID = selectedAdvertismentID;
+    }
+
+
+
 
     public MainCachManager() {
         items = new ArrayList();
@@ -27,7 +43,7 @@ public class MainCachManager {
         } else return items;
     }
 
-    public void incrementLIstItem(int itemCount){
-        lastItemNumber = lastItemNumber+itemCount;
+    public void incrementLIstItem(int itemCount) {
+        lastItemNumber = lastItemNumber + itemCount;
     }
 }

@@ -18,49 +18,50 @@ import org.junit.Test;
 import java.util.Collections;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 
 public class MainIntractorImpleTest {
 
     private MainRequests mainRequests;
     private MainDataBaseActions mainDataBaseActions;
-    MainIntractorImple mainIntractorImple;
+    private MainIntractorImple mainIntractorImple;
 
 
-    public void okConditions(){
+    public void okConditions() {
         mainRequests = new MainRequests() {
             @Override
-            public void deleteAds(int adsId, OnRequestDone<Void> onRequestDone) {
-                onRequestDone.onResponse(new ResponseModel<Void>(200,null));
+            public void deleteAds(String adsId, OnRequestDone<Void> onRequestDone) {
+                onRequestDone.onResponse(new ResponseModel<Void>(200, null));
             }
 
             @Override
-            public void promoteAds(int adsId, OnRequestDone<Void> onRequestDone) {
-                onRequestDone.onResponse(new ResponseModel<Void>(200,null));
+            public void promoteAds(String adsId, OnRequestDone<Void> onRequestDone) {
+                onRequestDone.onResponse(new ResponseModel<Void>(200, null));
 
             }
 
             @Override
             public void refreshList(OnRequestDone<List<Ads>> onRequestDone) {
-                onRequestDone.onResponse(new ResponseModel<List<Ads>>(200,Collections.<Ads>emptyList()));
+                onRequestDone.onResponse(new ResponseModel<List<Ads>>(200, Collections.<Ads>emptyList()));
             }
 
             @Override
             public void getNextPsge(int lastItem, OnRequestDone<List<Ads>> onRequestDone) {
-                onRequestDone.onResponse(new ResponseModel<List<Ads>>(200,Collections.<Ads>emptyList()));
+                onRequestDone.onResponse(new ResponseModel<List<Ads>>(200, Collections.<Ads>emptyList()));
             }
         };
     }
-    public void stressCondittion(){
+
+    public void stressCondittion() {
         mainRequests = new MainRequests() {
             @Override
-            public void deleteAds(int adsId, OnRequestDone<Void> onRequestDone) {
+            public void deleteAds(String adsId, OnRequestDone<Void> onRequestDone) {
                 onRequestDone.onResponse(new ResponseModel<Void>(new Throwable()));
             }
 
             @Override
-            public void promoteAds(int adsId, OnRequestDone<Void> onRequestDone) {
+            public void promoteAds(String adsId, OnRequestDone<Void> onRequestDone) {
                 onRequestDone.onResponse(new ResponseModel<Void>(new Throwable()));
 
             }
@@ -79,7 +80,7 @@ public class MainIntractorImpleTest {
 
 
     @Before
-    public void before(){
+    public void before() {
         mainDataBaseActions = new MainDataBaseActions() {
             @Override
             public void saveDeletedAds(Ads ads, OnDAOJobFinish<Void> onDAOJobFinish) {
@@ -97,12 +98,10 @@ public class MainIntractorImpleTest {
     }
 
 
-
-
     @Test
     public void deleteAdvertisment_NetError() throws Exception {
         stressCondittion();
-
+        mainIntractorImple = new MainIntractorImple(mainDataBaseActions, mainRequests, new MainCachManager());
         mainIntractorImple.deleteAdvertisment(new Ads(new Book(), "", new User(), 1000), new OnIntractor<MainState>() {
             @Override
             public void onDone(MainState viewState) {
@@ -113,27 +112,48 @@ public class MainIntractorImpleTest {
 
     @Test
     public void deleteAdvertisment_okCondittions() throws Exception {
-
+        okConditions();
+        mainIntractorImple = new MainIntractorImple(mainDataBaseActions, mainRequests, new MainCachManager());
+        mainIntractorImple.deleteAdvertisment(new Ads(null, null, null, 10), new OnIntractor<MainState>() {
+            @Override
+            public void onDone(MainState viewState) {
+                assertTrue(viewState instanceof MainState.DeleteState);
+            }
+        });
     }
+
 
     @Test
     public void promoteAdvertisment_okConditions() throws Exception {
+        okConditions();
+        mainIntractorImple = new MainIntractorImple(mainDataBaseActions, mainRequests, new MainCachManager());
+        mainIntractorImple.promoteAdvertisment(new Ads(null,null,null,10), new OnIntractor<MainState>() {
+            @Override
+            public void onDone(MainState viewState) {
+                assertTrue(viewState instanceof MainState.PromoteState);
+            }
+        });
 
     }
 
     @Test
     public void promoteAdvertisment_NetError() throws Exception {
+        stressCondittion();
+        mainIntractorImple = new MainIntractorImple(mainDataBaseActions, mainRequests, new MainCachManager());
+        mainIntractorImple.promoteAdvertisment(new Ads(null,null,null,10), new OnIntractor<MainState>() {
+            @Override
+            public void onDone(MainState viewState) {
+                assertTrue(viewState instanceof MainState.NetError);
+            }
+        });
 
     }
 
 
-
-
-
     @Test
-    public void getMoreAds_NormalConditions () throws Exception {
+    public void getMoreAds_NormalConditions() throws Exception {
         okConditions();
-        mainIntractorImple = new MainIntractorImple(mainDataBaseActions,mainRequests,new MainCachManager());
+        mainIntractorImple = new MainIntractorImple(mainDataBaseActions, mainRequests, new MainCachManager());
         mainIntractorImple.getMoreAds(new OnIntractor<MainState>() {
             @Override
             public void onDone(MainState viewState) {
@@ -142,12 +162,12 @@ public class MainIntractorImpleTest {
         });
 
 
-
     }
+
     @Test
     public void getMoreAds_NetError() throws Exception {
         stressCondittion();
-        mainIntractorImple = new MainIntractorImple(mainDataBaseActions,mainRequests,new MainCachManager());
+        mainIntractorImple = new MainIntractorImple(mainDataBaseActions, mainRequests, new MainCachManager());
         mainIntractorImple.getMoreAds(new OnIntractor<MainState>() {
             @Override
             public void onDone(MainState viewState) {
@@ -157,9 +177,9 @@ public class MainIntractorImpleTest {
     }
 
     @Test
-    public void refreshList_okConditions () throws Exception {
+    public void refreshList_okConditions() throws Exception {
         okConditions();
-        mainIntractorImple = new MainIntractorImple(mainDataBaseActions,mainRequests,new MainCachManager());
+        mainIntractorImple = new MainIntractorImple(mainDataBaseActions, mainRequests, new MainCachManager());
         mainIntractorImple.refreshList(new OnIntractor<MainState>() {
             @Override
             public void onDone(MainState viewState) {
@@ -171,7 +191,7 @@ public class MainIntractorImpleTest {
     @Test
     public void refreshList_stressCondition() throws Exception {
         stressCondittion();
-        mainIntractorImple = new MainIntractorImple(mainDataBaseActions,mainRequests,new MainCachManager());
+        mainIntractorImple = new MainIntractorImple(mainDataBaseActions, mainRequests, new MainCachManager());
         mainIntractorImple.refreshList(new OnIntractor<MainState>() {
             @Override
             public void onDone(MainState viewState) {

@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.daimajia.swipe.SwipeLayout;
 import com.example.rasam.bookhubadmins.R;
 
 public class MainViewHolder extends RecyclerView.ViewHolder {
@@ -24,6 +25,13 @@ public class MainViewHolder extends RecyclerView.ViewHolder {
     public MainViewHolder(View itemView, final OnSwipeButtonClicked onSwipeButtonClicked) {
         super(itemView);
         this.onSwipeButtonClicked = onSwipeButtonClicked;
+
+
+        SwipeLayout swipeLayout =  itemView.findViewById(R.id.sample1);
+
+
+        swipeLayout.setShowMode(SwipeLayout.ShowMode.PullOut);
+
 
         promoteButton = itemView.findViewById(R.id.promote_button);
         deleteButton = itemView.findViewById(R.id.delete_button);

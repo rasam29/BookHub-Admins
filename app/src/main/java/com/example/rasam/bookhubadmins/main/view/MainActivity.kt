@@ -1,50 +1,62 @@
 package com.example.rasam.bookhubadmins.main.view
 
 import android.content.Context
-import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
-import android.os.PersistableBundle
+import android.os.Handler
+import android.support.v4.widget.DrawerLayout
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.view.Gravity
 import android.view.View
+import android.widget.ImageView
 import android.widget.Toast
 import com.example.rasam.bookhubadmins.R
-import com.example.rasam.bookhubadmins.main.Bussiness.MainIntractorImple
 import com.example.rasam.bookhubadmins.main.Bussiness.MainState
 import com.example.rasam.bookhubadmins.main.presenter.MainDependency
 import com.example.rasam.bookhubadmins.main.presenter.MainPresenter
 import com.example.rasam.bookhubadmins.main.view.mainList.MainAdapter
-import com.example.rasam.bookhubadmins.main.view.mainList.OnSwipeButtonClicked
 import com.example.rasam.bookhubadmins.main.view.mainList.OnSwipeData
-import com.example.rasam.bookhubadmins.maintanance.infraStructure.DataBase.DAQ
-import com.example.rasam.bookhubadmins.maintanance.infraStructure.net.RequestManager
 import com.example.rasam.bookhubadmins.maintanance.parent.ParentActivity
 import com.example.rasam.bookhubadmins.pojos.ads.Ads
 
-class MainActivity : MainView, ParentActivity<MainView, MainPresenter>(),OnSwipeData {
-
+class MainActivity : MainView, ParentActivity<MainView, MainPresenter>(), OnSwipeData {
 
 
     lateinit var swipeRefreshLayout: SwipeRefreshLayout
     var context: Context = this
-    lateinit var listView:RecyclerView
-    lateinit var adapter:MainAdapter
-    lateinit var adsList:ArrayList<Ads>
+    lateinit var listView: RecyclerView
+    lateinit var adapter: MainAdapter
+    lateinit var adsList: ArrayList<Ads>
+    lateinit var hambIcon: ImageView
+    lateinit var drawer: DrawerLayout
 
-
-
-    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
-        super.onCreate(savedInstanceState, persistentState)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+
+
         presenter.attachView(this)
-        listView = findViewById(R.id.main_list)
-        adsList  = ArrayList()
-        adapter = MainAdapter(this,adsList,this)
+
+
+
+        hambIcon = findViewById(R.id.hamburgerIcon)
+        drawer = findViewById(R.id.drawerLayout)
+
+
+        hambIcon.setOnClickListener {
+            drawer.openDrawer(Gravity.RIGHT)
+        }
+
+        listView = findViewById<RecyclerView>(R.id.main_list)
+        adsList = ArrayList()
+        adapter = MainAdapter(this, adsList, this)
         listView.adapter = adapter
-        var manager =LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false)
+        var manager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         listView.layoutManager = manager
         swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout)
+
         swipeRefreshLayout.setOnRefreshListener {
             presenter.refreshList()
         }
@@ -58,8 +70,8 @@ class MainActivity : MainView, ParentActivity<MainView, MainPresenter>(),OnSwipe
         })
 
 
-
     }
+
 
     override fun onResume() {
         super.onResume()
@@ -69,7 +81,9 @@ class MainActivity : MainView, ParentActivity<MainView, MainPresenter>(),OnSwipe
 
     override fun render(mainState: MainState?) {
         if (mainState is MainState.RefreshState) {
-            refreshList(mainState.list)
+            Handler().postDelayed({
+                refreshList(mainState.list)
+            }, 1000)
         } else if (mainState is MainState.DeleteState) {
             Toast.makeText(context, "آگهی با موفقیت پاک شد", Toast.LENGTH_SHORT).show()
             deleteAds(mainState.ads)
@@ -83,6 +97,7 @@ class MainActivity : MainView, ParentActivity<MainView, MainPresenter>(),OnSwipe
 
 
     override fun onDelete(view: View?, ads: Ads) {
+
         presenter.deleteAdvertisment(ads)
 
     }
@@ -97,12 +112,14 @@ class MainActivity : MainView, ParentActivity<MainView, MainPresenter>(),OnSwipe
     }
 
     override fun refreshList(adsList: MutableList<Ads>?) {
+        swipeRefreshLayout.setRefreshing(false)
+
         adapter.refreshList(adsList)
     }
-    fun deleteAds(ads:Ads){
+
+    fun deleteAds(ads: Ads) {
         adapter.delete(ads)
     }
-
 
 
     override fun showLoading() {
@@ -110,7 +127,7 @@ class MainActivity : MainView, ParentActivity<MainView, MainPresenter>(),OnSwipe
     }
 
     override fun stablishPresenter(): MainPresenter {
-        return MainPresenter(this,MainDependency.inject())
+        return MainPresenter(this, MainDependency.inject())
     }
 
 

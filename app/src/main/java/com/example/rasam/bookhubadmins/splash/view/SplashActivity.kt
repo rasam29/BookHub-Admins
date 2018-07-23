@@ -35,12 +35,14 @@ class SplashActivity : SplashView, ParentActivity<SplashView, SplashPresenter>()
     override fun onStop() {
         super.onStop()
         presenter.detachView()
+        finish()
     }
 
 
     override fun render(splashState: SplashViewState?) {
         if (splashState is SplashViewState.NoUpdateState) {
             presenter.checkForToken()
+
 
         } else if (splashState is SplashViewState.OnForceUpdate) {
             showForceUpdate(splashState.updateModel)
@@ -84,4 +86,10 @@ class SplashActivity : SplashView, ParentActivity<SplashView, SplashPresenter>()
     fun doSomeAnimation(){
         //todo its optional could iplemented in next release
     }
+
+    override fun onBackPressed() {
+
+    }
+
+
 }

@@ -23,6 +23,7 @@
         <activity android:name=".auth.fragments.AuthKeyVerification.view.AuthKeyActivity" />
         <activity android:name=".auth.fragments.BlockedFragment" />
         <activity android:name=".main.view.MainActivity" />
+        <activity android:name=".productInfo.view.MoreDetailsActivity" />
     </application>
 
 </manifest>

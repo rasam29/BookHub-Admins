@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.mxn.soul.flowingdrawer_core.FlowingDrawer xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:id="@+id/drawerLayout">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,10 +19,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="right"
+                android:id="@+id/hamburgerIcon"
                 android:src="@drawable/ic_hamb_icon" />
 
             <ImageView
-                android:layout_width="100dp"
+                android:layout_width="70dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="right"
                 android:layout_marginRight="10dp"
@@ -42,15 +44,13 @@
 
     </LinearLayout>
 
-    <com.mxn.soul.flowingdrawer_core.FlowingMenuLayout
+    <LinearLayout
         android:id="@+id/menulayout"
         android:layout_width="match_parent"
+        android:layout_gravity = "right"
         android:layout_height="match_parent">
 
-        <FrameLayout
-            android:id="@+id/id_container_menu"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
 
-    </com.mxn.soul.flowingdrawer_core.FlowingMenuLayout>
-</com.mxn.soul.flowingdrawer_core.FlowingDrawer>
+
+    </LinearLayout>
+</android.support.v4.widget.DrawerLayout>
