@@ -21,4 +21,6 @@ public interface MainIntractorFacade {
     void getMoreAds(OnIntractor<MainState> onIntractor);
 
     void refreshList(OnIntractor<MainState> onIntractor);
+
+    void cachAd(Ads ads);
 }

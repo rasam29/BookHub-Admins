@@ -1,27 +1,28 @@
-package com.example.rasam.bookhubadmins.main.presenter;
+package com.example.rasam.bookhubadmins.productInfo.presenter;
 
 import com.example.rasam.bookhubadmins.main.Bussiness.MainIntractorImple;
 import com.example.rasam.bookhubadmins.main.entity.MainCachManager;
+import com.example.rasam.bookhubadmins.main.presenter.MainDependency;
 import com.example.rasam.bookhubadmins.maintanance.infraStructure.DataBase.DAQ;
 import com.example.rasam.bookhubadmins.maintanance.infraStructure.net.RequestManager;
+import com.example.rasam.bookhubadmins.productInfo.bussiness.MoreIntractorImple;
 
 /**
- * Created by R.Arabzadeh Taktell on 7/21/2018.
+ * Created by R.Arabzadeh Taktell on 7/24/2018.
  */
 
-public class MainDependency {
-
+public class MoreDependency {
     private static DAQ daq;
     private static RequestManager requestManager;
-    private static MainIntractorImple mainIntractorImple;
-    private static MainCachManager mainCachManager;
+    private static MoreIntractorImple moreIntractorImple;
 
 
-    public static MainIntractorImple inject() {
-        if (mainIntractorImple == null) {
-            mainIntractorImple = new MainIntractorImple(getDataBAseManager(), getRequetManger(), getCachMager());
+
+    public static MoreIntractorImple inject() {
+        if (moreIntractorImple == null) {
+            moreIntractorImple = new MoreIntractorImple(getDataBAseManager(), getRequetManger(), getCachMager());
         }
-        return mainIntractorImple;
+        return moreIntractorImple;
     }
 
     private static RequestManager getRequetManger() {
@@ -40,11 +41,7 @@ public class MainDependency {
         return daq;
     }
 
-    public static MainCachManager getCachMager() {
-        if (mainCachManager == null) {
-            mainCachManager = new MainCachManager();
-        }
-
-        return mainCachManager;
+    private static MainCachManager getCachMager() {
+        return MainDependency.getCachMager();
     }
 }

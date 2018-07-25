@@ -10,6 +10,13 @@ import java.util.List;
  * Created by R.Arabzadeh Taktell on 7/18/2018.
  */
 public class MainCachManager {
+
+
+    public MainCachManager() {
+        items = new ArrayList();
+    }
+
+
     private int lastItemNumber;
     private List items;
 
@@ -22,16 +29,13 @@ public class MainCachManager {
         return selectedAdvertismentID;
     }
 
-    public void setSelectedAdvertismentID(Ads selectedAdvertisment) {
-        this.selectedAdvertismentID = selectedAdvertismentID;
+    public void setSelectedAdvertismentID(Ads ads) {
+        this.selectedAdvertismentID = ads;
     }
 
 
 
 
-    public MainCachManager() {
-        items = new ArrayList();
-    }
 
     public int getLastItemNumber() {
         return lastItemNumber;

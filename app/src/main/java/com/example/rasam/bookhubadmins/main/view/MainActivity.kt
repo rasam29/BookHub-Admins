@@ -1,6 +1,7 @@
 package com.example.rasam.bookhubadmins.main.view
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.support.v4.widget.DrawerLayout
@@ -11,6 +12,7 @@ import android.view.Gravity
 import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
+import com.bumptech.glide.Glide
 import com.example.rasam.bookhubadmins.R
 import com.example.rasam.bookhubadmins.main.Bussiness.MainState
 import com.example.rasam.bookhubadmins.main.presenter.MainDependency
@@ -19,6 +21,7 @@ import com.example.rasam.bookhubadmins.main.view.mainList.MainAdapter
 import com.example.rasam.bookhubadmins.main.view.mainList.OnSwipeData
 import com.example.rasam.bookhubadmins.maintanance.parent.ParentActivity
 import com.example.rasam.bookhubadmins.pojos.ads.Ads
+import com.example.rasam.bookhubadmins.productInfo.view.MoreDetailsActivity
 
 class MainActivity : MainView, ParentActivity<MainView, MainPresenter>(), OnSwipeData {
 
@@ -30,7 +33,7 @@ class MainActivity : MainView, ParentActivity<MainView, MainPresenter>(), OnSwip
     lateinit var adsList: ArrayList<Ads>
     lateinit var hambIcon: ImageView
     lateinit var drawer: DrawerLayout
-
+    lateinit var coverPhoto:ImageView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -39,7 +42,12 @@ class MainActivity : MainView, ParentActivity<MainView, MainPresenter>(), OnSwip
 
         presenter.attachView(this)
 
+        coverPhoto = findViewById(R.id.coverPhoto)
 
+
+        Glide.with(this).load(R.mipmap.cover)
+                .thumbnail(0.5f)
+                .into(coverPhoto)
 
         hambIcon = findViewById(R.id.hamburgerIcon)
         drawer = findViewById(R.id.drawerLayout)
@@ -106,6 +114,12 @@ class MainActivity : MainView, ParentActivity<MainView, MainPresenter>(), OnSwip
         presenter.promoteAdvertisment(ads)
 
     }
+
+    override fun onItemClick(view: View?, adsItem: Ads?) {
+        presenter.cachAdvertisment(adsItem)
+        startActivity(Intent(this, MoreDetailsActivity::class.java))
+    }
+
 
     override fun appendListToRecyclerView(adsList: MutableList<Ads>?) {
         adapter.appendList(adsList)

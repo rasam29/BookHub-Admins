@@ -50,6 +50,11 @@ public class MainAdapter extends RecyclerView.Adapter<MainViewHolder> implements
 
     }
 
+    @Override
+    public void onClick(View view, int adsItem) {
+        onSwipeData.onItemClick(view,advertismentList.get(adsItem));
+    }
+
     public void appendList(List<Ads> ads){
         advertismentList.addAll(ads);
         notifyDataSetChanged();

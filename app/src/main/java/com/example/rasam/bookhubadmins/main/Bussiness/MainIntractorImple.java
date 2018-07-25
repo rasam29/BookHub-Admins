@@ -18,10 +18,10 @@ public class MainIntractorImple implements MainIntractorFacade {
     MainRequests mainRequests;
     MainCachManager mainCachManager;
 
-    public MainIntractorImple(MainDataBaseActions dbOperations, MainRequests mainRequests, MainCachManager mainCachManager) {
+    public MainIntractorImple(MainDataBaseActions dbOperations, MainRequests mainRequests,MainCachManager mainCachManager) {
         this.dbOperations = dbOperations;
         this.mainRequests = mainRequests;
-        this.mainCachManager = mainCachManager;
+        this.mainCachManager  = mainCachManager;
     }
 
 
@@ -96,5 +96,10 @@ public class MainIntractorImple implements MainIntractorFacade {
                 }
             }
         });
+    }
+
+    @Override
+    public void cachAd(Ads ads) {
+        mainCachManager.setSelectedAdvertismentID(ads);
     }
 }
