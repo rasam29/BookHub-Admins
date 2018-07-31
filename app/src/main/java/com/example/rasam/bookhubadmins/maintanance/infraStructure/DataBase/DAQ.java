@@ -1,5 +1,8 @@
 package com.example.rasam.bookhubadmins.maintanance.infraStructure.DataBase;
 
+import com.example.rasam.bookhubadmins.contactUs.entity.ContactUsDAO;
+import com.example.rasam.bookhubadmins.contactUs.presenter.ContactUsState;
+import com.example.rasam.bookhubadmins.historyManager.entity.HistoryDataBaseManger;
 import com.example.rasam.bookhubadmins.main.entity.MainDataBaseActions;
 import com.example.rasam.bookhubadmins.maintanance.abstractions.OnDAOJobFinish;
 import com.example.rasam.bookhubadmins.pojos.AuthKey;
@@ -8,7 +11,7 @@ import com.raizlabs.android.dbflow.sql.language.SQLite;
 
 import java.util.List;
 
-public class DAQ implements AuthKeyDAO,MainDataBaseActions {
+public class DAQ implements AuthKeyDAO,MainDataBaseActions,ContactUsDAO,HistoryDataBaseManger{
 
 
     @Override
@@ -70,4 +73,18 @@ public class DAQ implements AuthKeyDAO,MainDataBaseActions {
     }
 
 
+    @Override
+    public void saveMassageToDataBase(OnDAOJobFinish<Void> onDAOJobFinish) {
+
+    }
+
+    @Override
+    public void getPromotedAds(OnDAOJobFinish<List<Ads>> onDAOJobFinish) {
+
+    }
+
+    @Override
+    public void getDeletedAds(OnDAOJobFinish<List<Ads>> onDAOJobFinish) {
+
+    }
 }

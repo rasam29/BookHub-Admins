@@ -1,12 +1,17 @@
 package com.example.rasam.bookhubadmins.maintanance.infraStructure.net;
 
+import com.example.rasam.bookhubadmins.SimpleAdvertismentAction;
+import com.example.rasam.bookhubadmins.contactUs.entity.ContactUSRequest;
+import com.example.rasam.bookhubadmins.historyManager.entity.HistoryRequests;
 import com.example.rasam.bookhubadmins.main.entity.MainRequests;
+import com.example.rasam.bookhubadmins.maintanance.abstractions.OnIntractor;
 import com.example.rasam.bookhubadmins.maintanance.abstractions.OnRequestDone;
 import com.example.rasam.bookhubadmins.maintanance.infraStructure.net.requestActions.AuthKeyRequests;
 import com.example.rasam.bookhubadmins.maintanance.infraStructure.net.requestActions.CompleteAuthRequests;
 import com.example.rasam.bookhubadmins.maintanance.infraStructure.net.requestActions.RegisterRequest;
 import com.example.rasam.bookhubadmins.maintanance.infraStructure.net.requestActions.ReportVerificationRequest;
 import com.example.rasam.bookhubadmins.maintanance.infraStructure.net.requestActions.SplashRequests;
+import com.example.rasam.bookhubadmins.pojos.AdminMassageReports;
 import com.example.rasam.bookhubadmins.pojos.UpdateModel;
 import com.example.rasam.bookhubadmins.pojos.ads.Ads;
 import com.example.rasam.bookhubadmins.pojos.ads.Book;
@@ -19,7 +24,7 @@ import com.example.rasam.bookhubadmins.pojos.authModels.ReportVerificationModel;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RequestManager implements SplashRequests, AuthKeyRequests, CompleteAuthRequests, ReportVerificationRequest, RegisterRequest, MainRequests {
+public class RequestManager implements SplashRequests, AuthKeyRequests, CompleteAuthRequests, ReportVerificationRequest, RegisterRequest, MainRequests,ContactUSRequest,SimpleAdvertismentAction,HistoryRequests {
     public void checkForUpdate(OnRequestDone<UpdateModel> onRequestDone) {
         //todo call the backend whenever the back end is ready
         onRequestDone.onResponse(new ResponseModel<>(200, new UpdateModel(false, null, null)));
@@ -81,6 +86,28 @@ public class RequestManager implements SplashRequests, AuthKeyRequests, Complete
 
     }
 
+
+
+    @Override
+    public void sendMassageToServer(String token,String massage, OnRequestDone<Void> onRequestDone) {
+
+    }
+
+    @Override
+    public void getMassagesHistoryFromBookHub(String token, OnIntractor<List<AdminMassageReports>> onIntractor) {
+
+    }
+
+    @Override
+    public void getDeletedAddHistory(String token, OnRequestDone<List<Ads>> onRequestDone) {
+
+    }
+
+    @Override
+    public void getPromotedAdsHistory(String token, OnRequestDone<List<Ads>> onRequestDone) {
+
+    }
+
     private List<Ads> getMockAds() {
         List<Ads> adsList = new ArrayList<>();
         Book book = new Book.BookBuilder()
@@ -105,5 +132,4 @@ public class RequestManager implements SplashRequests, AuthKeyRequests, Complete
 
         return adsList;
     }
-
 }
