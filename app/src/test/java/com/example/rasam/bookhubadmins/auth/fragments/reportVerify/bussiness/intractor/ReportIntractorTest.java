@@ -47,8 +47,8 @@ public class ReportIntractorTest {
     public void sendCodeToServer_codeWrong() {
         reportVerificationRequest = new ReportVerificationRequest() {
             @Override
-            public void verifyReport(ReportVerificationModel reportModel, OnRequestDone<Void> onRequestDone) {
-                onRequestDone.onResponse(new ResponseModel<Void>(203,null));
+            public void verifyReport(ReportVerificationModel reportModel, OnRequestDone<String> onRequestDone) {
+                onRequestDone.onResponse(new ResponseModel<String>(203,"adssdf"));
             }
         };
         reportIntractorImple = new ReportIntractorImple(reportVerificationRequest,authKeyDAO);
@@ -66,8 +66,8 @@ public class ReportIntractorTest {
     public void sendCodeToServer_ok() {
         reportVerificationRequest = new ReportVerificationRequest() {
             @Override
-            public void verifyReport(ReportVerificationModel reportModel, OnRequestDone<Void> onRequestDone) {
-                onRequestDone.onResponse(new ResponseModel<Void>(200,null));
+            public void verifyReport(ReportVerificationModel reportModel, OnRequestDone<String> onRequestDone) {
+                onRequestDone.onResponse(new ResponseModel<String>(200,"dfadfasf"));
             }
         };
         reportIntractorImple = new ReportIntractorImple(reportVerificationRequest,authKeyDAO);
@@ -90,8 +90,8 @@ public class ReportIntractorTest {
     public void sendCodeToServer_OnNetError() {
         reportVerificationRequest = new ReportVerificationRequest() {
             @Override
-            public void verifyReport(ReportVerificationModel reportModel, OnRequestDone<Void> onRequestDone) {
-                onRequestDone.onResponse(new ResponseModel<Void>(new Throwable()));
+            public void verifyReport(ReportVerificationModel reportModel, OnRequestDone<String> onRequestDone) {
+                onRequestDone.onResponse(new ResponseModel<String>(new Throwable()));
             }
         };
         reportIntractorImple = new ReportIntractorImple(reportVerificationRequest,authKeyDAO);

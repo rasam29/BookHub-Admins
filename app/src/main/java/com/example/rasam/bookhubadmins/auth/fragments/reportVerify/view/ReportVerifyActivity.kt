@@ -1,26 +1,20 @@
 package com.example.rasam.bookhubadmins.auth.fragments.reportVerify.view
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.EditText
-import android.widget.TabHost
 import android.widget.Toast
-import butterknife.BindView
 import butterknife.ButterKnife
 import com.example.rasam.bookhubadmins.R
-import com.example.rasam.bookhubadmins.auth.fragments.BlockedFragment
 import com.example.rasam.bookhubadmins.auth.fragments.reportVerify.bussiness.ReportViewState
 import com.example.rasam.bookhubadmins.auth.fragments.reportVerify.bussiness.intractor.ReportIntractorImple
 import com.example.rasam.bookhubadmins.auth.fragments.reportVerify.presenter.ReportVerificationPresenter
+import com.example.rasam.bookhubadmins.main.view.MainActivity
 import com.example.rasam.bookhubadmins.maintanance.infraStructure.DataBase.DAQ
 import com.example.rasam.bookhubadmins.maintanance.infraStructure.net.RequestManager
 import com.example.rasam.bookhubadmins.maintanance.parent.ParentActivity
-import com.example.rasam.bookhubadmins.maintanance.parent.ParentFragment
 
 class ReportVerifyActivity : ParentActivity<ReportVerifyView, ReportVerificationPresenter>(), ReportVerifyView, TextWatcher {
     var context = this
@@ -29,7 +23,7 @@ class ReportVerifyActivity : ParentActivity<ReportVerifyView, ReportVerification
     }
 
 
-//    @BindView(R.id.verify_container)
+    //    @BindView(R.id.verify_container)
     lateinit var verify_container: EditText
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,12 +46,12 @@ class ReportVerifyActivity : ParentActivity<ReportVerifyView, ReportVerification
     }
 
     override fun onTextChanged(chars: CharSequence?, p1: Int, p2: Int, p3: Int) {
-        if (chars != null) {
-            if (chars.length == 4) {
-                presenter.sendCodeToServer(chars.toString(), context)
-            }
 
+        if (verify_container.text.length == 4) {
+            presenter.sendCodeToServer(chars.toString(), context)
         }
+
+
     }
 
     override fun render(viewState: ReportViewState?) {
@@ -71,7 +65,8 @@ class ReportVerifyActivity : ParentActivity<ReportVerifyView, ReportVerification
     }
 
     override fun onCodeOK() {
-      Log.d("verify Report","EveryThing is ok")
+        startActivity(Intent(this, MainActivity::class.java))
+        finish()
     }
 
     override fun onCodeWrong() {

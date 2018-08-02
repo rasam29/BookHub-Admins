@@ -23,6 +23,11 @@
         <activity android:name=".auth.fragments.AuthKeyVerification.view.AuthKeyActivity" />
         <activity android:name=".auth.fragments.BlockedFragment" />
         <activity android:name=".main.view.MainActivity" />
+        <activity android:name=".productInfo.view.MoreDetailsActivity" />
+
+        <activity android:name=".historyManager.view.deleted.DeletedHistoryActivity" />
+        <activity android:name=".historyManager.view.promoted.PromotedHistoryActivity" />
+        <activity android:name=".contactUs.view.ContactUsActivity" />
     </application>
 
 </manifest>
