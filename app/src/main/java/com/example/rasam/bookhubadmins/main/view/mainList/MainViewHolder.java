@@ -5,9 +5,10 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.daimajia.swipe.SwipeLayout;
 import com.example.rasam.bookhubadmins.R;
 
-public class MainViewHolder extends RecyclerView.ViewHolder {
+public class MainViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
     public OnSwipeButtonClicked onSwipeButtonClicked;
 
     public LinearLayout promoteButton;
@@ -19,12 +20,20 @@ public class MainViewHolder extends RecyclerView.ViewHolder {
     public TextView publisher;
     public TextView writer;
     public TextView locationDesc;
+    public LinearLayout frontView;
 
 
     public MainViewHolder(View itemView, final OnSwipeButtonClicked onSwipeButtonClicked) {
         super(itemView);
         this.onSwipeButtonClicked = onSwipeButtonClicked;
 
+
+        SwipeLayout swipeLayout =  itemView.findViewById(R.id.sample1);
+
+
+        swipeLayout.setShowMode(SwipeLayout.ShowMode.PullOut);
+
+        frontView = itemView.findViewById(R.id.front_view);
         promoteButton = itemView.findViewById(R.id.promote_button);
         deleteButton = itemView.findViewById(R.id.delete_button);
 
@@ -48,7 +57,15 @@ public class MainViewHolder extends RecyclerView.ViewHolder {
             }
         });
 
+        frontView.setOnClickListener(this);
+
+
+
     }
 
 
+    @Override
+    public void onClick(View view) {
+        onSwipeButtonClicked.onClick(view,getAdapterPosition());
+    }
 }

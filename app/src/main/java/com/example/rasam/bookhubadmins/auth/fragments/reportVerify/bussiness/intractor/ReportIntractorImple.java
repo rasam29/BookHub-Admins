@@ -23,12 +23,12 @@ public class ReportIntractorImple implements ReportIntractorFacade {
 
     @Override
     public void sendCodeToServer(final ReportVerificationModel reportModel, final OnIntractor<ReportViewState> onDone) {
-        requestManager.verifyReport(reportModel, new OnRequestDone<Void>() {
+        requestManager.verifyReport(reportModel, new OnRequestDone<String>() {
             @Override
-            public void onResponse(ResponseModel<Void> responseModel) {
+            public void onResponse(ResponseModel<String> responseModel) {
                 if (responseModel.getThrowable() == null) {
                     if (responseModel.getStatusCode() == 200) {
-                        saveTokenToDataBase(null, onDone);
+                        saveTokenToDataBase(responseModel.getData(), onDone);
                     } else if (responseModel.getStatusCode() == 203) {
                         onDone.onDone(new ReportViewState.OnCodeWrong());
                     }
@@ -44,7 +44,7 @@ public class ReportIntractorImple implements ReportIntractorFacade {
         authKeyDAO.insertAuthKey(token, new OnDAOJobFinish<AuthKey>() {
             @Override
             public void onDone(DataBaseModel<AuthKey> dataBaseModel) {
-                if (dataBaseModel.getThrowable() != null && dataBaseModel.isOk()) {
+                if (dataBaseModel.getThrowable() == null) {
                     onDone.onDone(new ReportViewState.OnCodeOk());
                 }
 

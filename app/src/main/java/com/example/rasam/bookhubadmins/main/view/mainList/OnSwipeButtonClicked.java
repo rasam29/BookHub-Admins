@@ -7,4 +7,5 @@ import com.example.rasam.bookhubadmins.pojos.ads.Ads;
 public interface OnSwipeButtonClicked {
     void onDelete(View view, int adsItem);
     void onPromote(View view,int adsItem);
+    void onClick(View view,int adsItem);
 }

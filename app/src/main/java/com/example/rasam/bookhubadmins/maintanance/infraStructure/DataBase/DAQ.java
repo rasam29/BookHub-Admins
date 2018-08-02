@@ -1,19 +1,23 @@
 package com.example.rasam.bookhubadmins.maintanance.infraStructure.DataBase;
 
+import com.example.rasam.bookhubadmins.contactUs.entity.ContactUsDAO;
+import com.example.rasam.bookhubadmins.contactUs.presenter.ContactUsState;
+import com.example.rasam.bookhubadmins.historyManager.entity.HistoryDataBaseManger;
 import com.example.rasam.bookhubadmins.main.entity.MainDataBaseActions;
 import com.example.rasam.bookhubadmins.maintanance.abstractions.OnDAOJobFinish;
 import com.example.rasam.bookhubadmins.pojos.AuthKey;
+import com.example.rasam.bookhubadmins.pojos.ContactUsMassagePayLoad;
 import com.example.rasam.bookhubadmins.pojos.ads.Ads;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
 
 import java.util.List;
 
-public class DAQ implements AuthKeyDAO,MainDataBaseActions {
+public class DAQ implements AuthKeyDAO,MainDataBaseActions,ContactUsDAO,HistoryDataBaseManger{
 
 
     @Override
     public void deleteAuthKey(OnDAOJobFinish<AuthKey> onDone) {
-        //todo implement later on
+
     }
 
     @Override
@@ -29,7 +33,7 @@ public class DAQ implements AuthKeyDAO,MainDataBaseActions {
                 onDone.onDone(new DataBaseModel<AuthKey>(null, true));
             }
         } catch (Exception e) {
-            onDone.onDone(new DataBaseModel(e.getCause()));
+            onDone.onDone(new DataBaseModel<>(e.getCause()));
         }
 
     }
@@ -41,18 +45,49 @@ public class DAQ implements AuthKeyDAO,MainDataBaseActions {
             authKey.save();
             onDAO.onDone(new DataBaseModel<AuthKey>(authKey, true));
         } catch (Exception e) {
-            onDAO.onDone(new DataBaseModel(e.getCause()));
+            e.printStackTrace();
+            onDAO.onDone(new DataBaseModel<>(e.getCause()));
         }
     }
 
 
     @Override
     public void saveDeletedAds(Ads ads, OnDAOJobFinish<Void> onDAOJobFinish) {
-
+        try {
+            ads.setPromoted(false);
+            ads.save();
+            onDAOJobFinish.onDone(new DataBaseModel<Void>(true));
+        }catch (Exception e){
+            onDAOJobFinish.onDone(new DataBaseModel<Void>(e.getCause()));
+        }
     }
 
     @Override
     public void savePromotedAds(Ads ads, OnDAOJobFinish<Void> onDAOJobFinish) {
+        try {
+            ads.setPromoted(true);
+            ads.save();
+            onDAOJobFinish.onDone(new DataBaseModel<Void>(true));
+        }catch (Exception e){
+            onDAOJobFinish.onDone(new DataBaseModel<Void>(e.getCause()));
+        }
+    }
+
+
+
+
+    @Override
+    public void getPromotedAds(OnDAOJobFinish<List<Ads>> onDAOJobFinish) {
+
+    }
+
+    @Override
+    public void getDeletedAds(OnDAOJobFinish<List<Ads>> onDAOJobFinish) {
+
+    }
+
+    @Override
+    public void saveMassageToDataBase(ContactUsMassagePayLoad payLoad, OnDAOJobFinish<Void> onDAOJobFinish) {
 
     }
 }

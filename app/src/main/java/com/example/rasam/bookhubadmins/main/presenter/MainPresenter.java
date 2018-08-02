@@ -63,4 +63,9 @@ public class MainPresenter extends MvpBasePresenter<MainView> {
     }
 
 
+    public void cachAdvertisment(Ads ads){
+        mainIntractorFacade.cachAd(ads);
+    }
+
+
 }

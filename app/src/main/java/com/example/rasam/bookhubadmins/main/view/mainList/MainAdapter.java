@@ -20,6 +20,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainViewHolder> implements
         this.context = context;
         this.advertismentList = advertismentList;
         this.onSwipeData = onSwipeData;
+
     }
 
     @Override
@@ -49,6 +50,11 @@ public class MainAdapter extends RecyclerView.Adapter<MainViewHolder> implements
 
     }
 
+    @Override
+    public void onClick(View view, int adsItem) {
+        onSwipeData.onItemClick(view,advertismentList.get(adsItem));
+    }
+
     public void appendList(List<Ads> ads){
         advertismentList.addAll(ads);
         notifyDataSetChanged();
@@ -56,6 +62,11 @@ public class MainAdapter extends RecyclerView.Adapter<MainViewHolder> implements
 
     public void refreshList(List<Ads> ads){
         advertismentList = ads;
+        notifyDataSetChanged();
+    }
+
+    public void delete(Ads ads){
+        advertismentList.remove(ads);
         notifyDataSetChanged();
     }
 }
