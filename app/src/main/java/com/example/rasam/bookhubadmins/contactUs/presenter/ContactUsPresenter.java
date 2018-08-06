@@ -1,15 +1,9 @@
 package com.example.rasam.bookhubadmins.contactUs.presenter;
 
-import com.example.rasam.bookhubadmins.contactUs.bussiness.ContactUsIntractor;
 import com.example.rasam.bookhubadmins.contactUs.bussiness.ContactUsIntractorFacade;
-import com.example.rasam.bookhubadmins.contactUs.entity.ContactUSRequest;
-import com.example.rasam.bookhubadmins.contactUs.entity.ContactUsDAO;
-import com.example.rasam.bookhubadmins.contactUs.view.ContactUsView;
-import com.example.rasam.bookhubadmins.maintanance.abstractions.OnDAOJobFinish;
+import com.example.rasam.bookhubadmins.contactUs.view.contact_us.ContactUsView;
 import com.example.rasam.bookhubadmins.maintanance.abstractions.OnIntractor;
-import com.example.rasam.bookhubadmins.maintanance.abstractions.OnRequestDone;
-import com.example.rasam.bookhubadmins.maintanance.infraStructure.DataBase.DataBaseModel;
-import com.example.rasam.bookhubadmins.maintanance.infraStructure.net.ResponseModel;
+import com.example.rasam.bookhubadmins.pojos.ContactUsMassagePayLoad;
 import com.hannesdorfmann.mosby3.mvp.MvpBasePresenter;
 
 /**
@@ -31,8 +25,13 @@ public class ContactUsPresenter extends MvpBasePresenter<ContactUsView> implemen
         return contactUsView;
     }
 
-    public void sendMassageToServer(String massage) {
-        contactUsIntractor.sendMassageToSupportTeam(massage,this);
+    public void sendMassageToServer(String massage,String title) {
+        ContactUsMassagePayLoad payLoad = new ContactUsMassagePayLoad(title,massage);
+        contactUsIntractor.sendMassageToSupportTeam(payLoad,this);
+    }
+
+    public void getListOfMassagesHistory(){
+        contactUsIntractor.getMssagesHistory(this);
     }
 
     @Override

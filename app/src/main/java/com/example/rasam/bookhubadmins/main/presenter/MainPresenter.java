@@ -41,12 +41,9 @@ public class MainPresenter extends MvpBasePresenter<MainView> {
     }
 
     public void getMoreAds() {
-        mainIntractorFacade.getMoreAds(new OnIntractor<MainState>() {
-            @Override
-            public void onDone(MainState viewState) {
-                if (getView() != null) {
-                    getView().render(viewState);
-                }
+        mainIntractorFacade.getMoreAds(viewState -> {
+            if (getView() != null) {
+                getView().render(viewState);
             }
         });
     }

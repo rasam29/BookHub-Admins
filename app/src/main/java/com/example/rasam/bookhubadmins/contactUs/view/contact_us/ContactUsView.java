@@ -1,4 +1,4 @@
-package com.example.rasam.bookhubadmins.contactUs.view;
+package com.example.rasam.bookhubadmins.contactUs.view.contact_us;
 
 import com.example.rasam.bookhubadmins.contactUs.presenter.ContactUsState;
 import com.hannesdorfmann.mosby3.mvp.MvpView;

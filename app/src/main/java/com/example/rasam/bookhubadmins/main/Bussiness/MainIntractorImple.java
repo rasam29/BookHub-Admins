@@ -11,17 +11,15 @@ import com.example.rasam.bookhubadmins.maintanance.infraStructure.DataBase.DataB
 import com.example.rasam.bookhubadmins.maintanance.infraStructure.net.ResponseModel;
 import com.example.rasam.bookhubadmins.pojos.ads.Ads;
 
-import java.util.List;
-
 public class MainIntractorImple implements MainIntractorFacade {
     MainDataBaseActions dbOperations;
     MainRequests mainRequests;
     MainCachManager mainCachManager;
 
-    public MainIntractorImple(MainDataBaseActions dbOperations, MainRequests mainRequests,MainCachManager mainCachManager) {
+    public MainIntractorImple(MainDataBaseActions dbOperations, MainRequests mainRequests, MainCachManager mainCachManager) {
         this.dbOperations = dbOperations;
         this.mainRequests = mainRequests;
-        this.mainCachManager  = mainCachManager;
+        this.mainCachManager = mainCachManager;
     }
 
 
@@ -50,21 +48,15 @@ public class MainIntractorImple implements MainIntractorFacade {
 
     @Override
     public void promoteAdvertisment(final Ads advertisment, final OnIntractor<MainState> onIntractor) {
-        mainRequests.promoteAds(advertisment.getAdvertismentID(), new OnRequestDone<Void>() {
-            @Override
-            public void onResponse(ResponseModel<Void> responseModel) {
-                if (responseModel.getThrowable() != null) {
-                    onIntractor.onDone(new MainState.NetError());
-                } else if (responseModel.getStatusCode() == 200) {
-                    dbOperations.savePromotedAds(advertisment, new OnDAOJobFinish<Void>() {
-                        @Override
-                        public void onDone(DataBaseModel<Void> dataBaseModel) {
-                            if (dataBaseModel.getThrowable() == null) {
-                                onIntractor.onDone(new MainState.PromoteState(advertisment));
-                            }
-                        }
-                    });
-                }
+        mainRequests.promoteAds(advertisment.getAdvertismentID(), responseModel -> {
+            if (responseModel.getThrowable() != null) {
+                onIntractor.onDone(new MainState.NetError());
+            } else if (responseModel.getStatusCode() == 200) {
+                dbOperations.savePromotedAds(advertisment, dataBaseModel -> {
+                    if (dataBaseModel.getThrowable() == null) {
+                        onIntractor.onDone(new MainState.PromoteState(advertisment));
+                    }
+                });
             }
         });
     }
@@ -72,28 +64,24 @@ public class MainIntractorImple implements MainIntractorFacade {
     @Override
     public void getMoreAds(final OnIntractor<MainState> onIntractor) {
 
-        mainRequests.getNextPsge(mainCachManager.getLastItemNumber(), new OnRequestDone<List<Ads>>() {
-            @Override
-            public void onResponse(ResponseModel<List<Ads>> responseModel)  u{
-                if (responseModel.getThrowable() != null) {
-                    onIntractor.onDone(new MainState.NetError());
-                } else if (responseModel.getStatusCode() == 200) {
-                    onIntractor.onDone(new MainState.NextPaginationState(responseModel.getData()));
-                }
+        mainRequests.getNextPsge(mainCachManager.getLastItemNumber(), responseModel -> {
+            if (responseModel.getThrowable() != null) {
+                onIntractor.onDone(new MainState.NetError());
+            } else if (responseModel.getStatusCode() == 200) {
+                mainCachManager.incrementLIstItem(responseModel.getData().size());
+                onIntractor.onDone(new MainState.NextPaginationState(responseModel.getData()));
             }
         });
     }
 
     @Override
     public void refreshList(final OnIntractor<MainState> onIntractor) {
-        mainRequests.refreshList(new OnRequestDone<List<Ads>>() {
-            @Override
-            public void onResponse(ResponseModel<List<Ads>> responseModel) {
-                if (responseModel.getThrowable() != null) {
-                    onIntractor.onDone(new MainState.NetError());
-                } else if (responseModel.getStatusCode() == 200) {
-                    onIntractor.onDone(new MainState.RefreshState(responseModel.getData()));
-                }
+        mainRequests.refreshList(responseModel -> {
+            if (responseModel.getThrowable() != null) {
+                onIntractor.onDone(new MainState.NetError());
+            } else if (responseModel.getStatusCode() == 200) {
+                onIntractor.onDone(new MainState.RefreshState(responseModel.getData()));
+                mainCachManager.overrideItemListCount(responseModel.getData().size());
             }
         });
     }

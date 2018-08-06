@@ -11,9 +11,11 @@ import android.support.v7.widget.RecyclerView
 import android.view.Gravity
 import android.view.View
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.example.rasam.bookhubadmins.R
+import com.example.rasam.bookhubadmins.contactUs.view.ContactUsActivity
 import com.example.rasam.bookhubadmins.main.Bussiness.MainState
 import com.example.rasam.bookhubadmins.main.presenter.MainDependency
 import com.example.rasam.bookhubadmins.main.presenter.MainPresenter
@@ -22,6 +24,7 @@ import com.example.rasam.bookhubadmins.main.view.mainList.OnSwipeData
 import com.example.rasam.bookhubadmins.maintanance.parent.ParentActivity
 import com.example.rasam.bookhubadmins.pojos.ads.Ads
 import com.example.rasam.bookhubadmins.productInfo.view.MoreDetailsActivity
+import java.util.*
 
 class MainActivity : MainView, ParentActivity<MainView, MainPresenter>(), OnSwipeData {
 
@@ -33,7 +36,10 @@ class MainActivity : MainView, ParentActivity<MainView, MainPresenter>(), OnSwip
     lateinit var adsList: ArrayList<Ads>
     lateinit var hambIcon: ImageView
     lateinit var drawer: DrawerLayout
-    lateinit var coverPhoto:ImageView
+    lateinit var coverPhoto: ImageView
+    lateinit var contactUs: LinearLayout
+    var isLoading: Boolean = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -48,6 +54,11 @@ class MainActivity : MainView, ParentActivity<MainView, MainPresenter>(), OnSwip
         Glide.with(this).load(R.mipmap.cover)
                 .thumbnail(0.5f)
                 .into(coverPhoto)
+
+        contactUs = findViewById(R.id.contactUsContainer)
+        contactUs.setOnClickListener {
+            startActivity(Intent(this, ContactUsActivity::class.java))
+        }
 
         hambIcon = findViewById(R.id.hamburgerIcon)
         drawer = findViewById(R.id.drawerLayout)
@@ -67,15 +78,25 @@ class MainActivity : MainView, ParentActivity<MainView, MainPresenter>(), OnSwip
 
         swipeRefreshLayout.setOnRefreshListener {
             presenter.refreshList()
+            isLoading = true
         }
 
-        listView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrollStateChanged(recyclerView: RecyclerView?, newState: Int) {
-                super.onScrollStateChanged(recyclerView, newState)
-                val position = (recyclerView!!.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
+        val onScrollListener = object : RecyclerView.OnScrollListener() {
 
+            override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+
+                if (recyclerView != null) {
+                    if (!recyclerView.canScrollVertically(1)){
+                        isLoading = true
+                        showLoading()
+                        presenter.getMoreAds()
+                    }
+                }
             }
-        })
+        }
+
+        listView.setOnScrollListener(onScrollListener)
 
 
     }
@@ -83,6 +104,7 @@ class MainActivity : MainView, ParentActivity<MainView, MainPresenter>(), OnSwip
 
     override fun onResume() {
         super.onResume()
+        isLoading = true
         presenter.refreshList()
     }
 
@@ -90,16 +112,19 @@ class MainActivity : MainView, ParentActivity<MainView, MainPresenter>(), OnSwip
     override fun render(mainState: MainState?) {
         if (mainState is MainState.RefreshState) {
             Handler().postDelayed({
+                isLoading = false
                 refreshList(mainState.list)
             }, 1000)
         } else if (mainState is MainState.DeleteState) {
             Toast.makeText(context, "آگهی با موفقیت پاک شد", Toast.LENGTH_SHORT).show()
             deleteAds(mainState.ads)
+            isLoading = false
         } else if (mainState is MainState.NextPaginationState) {
             appendListToRecyclerView(mainState.list)
         } else if (mainState is MainState.PromoteState) {
             Toast.makeText(context, "آگهی تایید شد", Toast.LENGTH_SHORT).show()
             deleteAds(mainState.ads)
+            isLoading = false
         } else throw IllegalArgumentException("wrong state in main")
     }
 
@@ -128,6 +153,7 @@ class MainActivity : MainView, ParentActivity<MainView, MainPresenter>(), OnSwip
     override fun refreshList(adsList: MutableList<Ads>?) {
         swipeRefreshLayout.setRefreshing(false)
         adapter.refreshList(adsList)
+
     }
 
     fun deleteAds(ads: Ads) {
@@ -136,7 +162,7 @@ class MainActivity : MainView, ParentActivity<MainView, MainPresenter>(), OnSwip
 
 
     override fun showLoading() {
-
+        Toast.makeText(context,"در حال بارگزاری",Toast.LENGTH_SHORT).show()
     }
 
     override fun stablishPresenter(): MainPresenter {

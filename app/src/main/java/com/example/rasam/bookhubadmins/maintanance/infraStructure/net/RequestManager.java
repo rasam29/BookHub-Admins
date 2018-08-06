@@ -12,6 +12,7 @@ import com.example.rasam.bookhubadmins.maintanance.infraStructure.net.requestAct
 import com.example.rasam.bookhubadmins.maintanance.infraStructure.net.requestActions.ReportVerificationRequest;
 import com.example.rasam.bookhubadmins.maintanance.infraStructure.net.requestActions.SplashRequests;
 import com.example.rasam.bookhubadmins.pojos.AdminMassageReports;
+import com.example.rasam.bookhubadmins.pojos.ContactUsMassagePayLoad;
 import com.example.rasam.bookhubadmins.pojos.UpdateModel;
 import com.example.rasam.bookhubadmins.pojos.ads.Ads;
 import com.example.rasam.bookhubadmins.pojos.ads.Book;
@@ -64,37 +65,40 @@ public class RequestManager implements SplashRequests, AuthKeyRequests, Complete
 
     @Override
     public void deleteAds(String adsId, OnRequestDone<Void> onRequestDone) {
-        onRequestDone.onResponse(new ResponseModel<Void>(200, null));
+        onRequestDone.onResponse(new ResponseModel<>(200, null));
 
     }
 
     @Override
     public void promoteAds(String adsId, OnRequestDone<Void> onRequestDone) {
-        onRequestDone.onResponse(new ResponseModel<Void>(200, null));
+        onRequestDone.onResponse(new ResponseModel<>(200, null));
     }
 
     @Override
     public void refreshList(OnRequestDone<List<Ads>> onRequestDone) {
-        onRequestDone.onResponse(new ResponseModel<List<Ads>>(200, getMockAds()));
+        onRequestDone.onResponse(new ResponseModel<>(200, getMockAds()));
 
     }
 
     @Override
     public void getNextPsge(int lastItem, OnRequestDone<List<Ads>> onRequestDone) {
 
-        onRequestDone.onResponse(new ResponseModel<List<Ads>>(200, getMockAds()));
+        onRequestDone.onResponse(new ResponseModel<>(200, getMockAds()));
 
     }
 
 
 
-    @Override
-    public void sendMassageToServer(String token,String massage, OnRequestDone<Void> onRequestDone) {
 
+
+    @Override
+    public void sendMassageToServer(String token, ContactUsMassagePayLoad massage, OnRequestDone<Void> onRequestDone) {
+        onRequestDone.onResponse(new ResponseModel<>(200,null));
     }
 
     @Override
-    public void getMassagesHistoryFromBookHub(String token, OnRequestDone<List<AdminMassageReports>> onIntractor) {
+    public void getMassagesHistoryFromBookHub(String token, OnRequestDone<List<AdminMassageReports>> onRequestDone) {
+        onRequestDone.onResponse(new ResponseModel<>(200,getMocks()));
 
     }
 
@@ -102,12 +106,12 @@ public class RequestManager implements SplashRequests, AuthKeyRequests, Complete
 
     @Override
     public void getDeletedAddHistory(String token, OnRequestDone<List<Ads>> onRequestDone) {
-
+        onRequestDone.onResponse(new ResponseModel<>(200, getDeletedAds()));
     }
 
     @Override
     public void getPromotedAdsHistory(String token, OnRequestDone<List<Ads>> onRequestDone) {
-
+        onRequestDone.onResponse(new ResponseModel<>(200, getPromotedAds()));
     }
 
     private List<Ads> getMockAds() {
@@ -133,5 +137,65 @@ public class RequestManager implements SplashRequests, AuthKeyRequests, Complete
         }
 
         return adsList;
+    }
+    private List<Ads> getDeletedAds() {
+        List<Ads> adsList = new ArrayList<>();
+        Book book = new Book.BookBuilder()
+                .setAuthor("Robert C Martin")
+                .setName("Clean code")
+                .setNumberOfPages(350)
+                .setPrice(3500)
+                .setShabak("ldfksnndfjdvnd")
+                .build();
+
+        User user = new User.UserBuilder()
+                .Name("Rasam")
+                .FamilyName("Ararbzadeh")
+                .Location("tehran")
+                .PhoneNumber("09193078323")
+                .ProfilePicture("")
+                .UserId("sjnflkdfjns")
+                .build();
+        for (int i = 0; i < 20; i++) {
+            adsList.add(new Ads(book, "تهران خیابان عشق", user, 1000));
+        }
+
+        return adsList;
+    }
+    private List<Ads> getPromotedAds() {
+        List<Ads> adsList = new ArrayList<>();
+        Book book = new Book.BookBuilder()
+                .setAuthor("Robert C Martin")
+                .setName("Clean code")
+                .setNumberOfPages(350)
+                .setPrice(3500)
+                .setShabak("ldfksnndfjdvnd")
+                .build();
+
+        User user = new User.UserBuilder()
+                .Name("Rasam")
+                .FamilyName("Ararbzadeh")
+                .Location("tehran")
+                .PhoneNumber("09193078323")
+                .ProfilePicture("")
+                .UserId("sjnflkdfjns")
+                .build();
+        for (int i = 0; i < 20; i++) {
+            adsList.add(new Ads(book, "تهران خیابان عشق", user, 1000));
+        }
+
+        return adsList;
+    }
+
+    private List<AdminMassageReports> getMocks(){
+        List<AdminMassageReports> mockMassage = new ArrayList<>();
+        AdminMassageReports adminMassageReportsRead = new AdminMassageReports("مشکل ارسال دلیل","من  نمی توان دلیل رد آگهی رو اعلام کنم",true,"مشکل حل شد");
+        AdminMassageReports adminMassageReportsNotRead = new AdminMassageReports("مشکل ارسال دلیل","من  نمی توان دلیل رد آگهی رو اعلام کنم",false,"مشکل حل شد");
+
+        for (int i = 0;i<10;i++){
+            mockMassage.add(adminMassageReportsNotRead);
+            mockMassage.add(adminMassageReportsRead);
+        }
+        return mockMassage;
     }
 }

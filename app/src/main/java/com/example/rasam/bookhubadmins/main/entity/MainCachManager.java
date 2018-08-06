@@ -12,18 +12,13 @@ import java.util.List;
 public class MainCachManager {
 
 
+    private int lastItemNumber;
+    private List items;
+    private Ads selectedAdvertismentID;
+
     public MainCachManager() {
         items = new ArrayList();
     }
-
-
-    private int lastItemNumber;
-    private List items;
-
-    private Ads selectedAdvertismentID;
-
-
-
 
     public Ads getSelectedAdvertisment() {
         return selectedAdvertismentID;
@@ -34,17 +29,13 @@ public class MainCachManager {
     }
 
 
-
-
-
     public int getLastItemNumber() {
         return lastItemNumber;
     }
 
-    public List getItems() {
-        if (items == null) {
-            return Collections.emptyList();
-        } else return items;
+
+    public void overrideItemListCount(int lastItemNumber){
+        this.lastItemNumber = lastItemNumber;
     }
 
     public void incrementLIstItem(int itemCount) {

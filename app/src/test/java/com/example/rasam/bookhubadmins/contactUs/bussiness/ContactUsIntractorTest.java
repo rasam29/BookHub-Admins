@@ -11,14 +11,17 @@ import com.example.rasam.bookhubadmins.maintanance.infraStructure.DataBase.DataB
 import com.example.rasam.bookhubadmins.maintanance.infraStructure.net.ResponseModel;
 import com.example.rasam.bookhubadmins.pojos.AdminMassageReports;
 import com.example.rasam.bookhubadmins.pojos.AuthKey;
+import com.example.rasam.bookhubadmins.pojos.ContactUsMassagePayLoad;
 
 import junit.framework.Assert;
 
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
 
 /**
@@ -56,14 +59,15 @@ public class ContactUsIntractorTest {
     void onOk() {
         contactUSRequest = new ContactUSRequest() {
             @Override
-            public void sendMassageToServer(String token,String massage, OnRequestDone<Void> onRequestDone) {
+            public void sendMassageToServer(String token, ContactUsMassagePayLoad massage, OnRequestDone<Void> onRequestDone) {
                 onRequestDone.onResponse(new ResponseModel<Void>(200, null));
             }
 
             @Override
-            public void getMassagesHistoryFromBookHub(String token, OnIntractor<List<AdminMassageReports>> onIntractor) {
-                onIntractor.onResponse(new ResponseModel<Void>(200, null));
+            public void getMassagesHistoryFromBookHub(String token, OnRequestDone<List<AdminMassageReports>> onIntractor) {
+                onIntractor.onResponse(new ResponseModel<>(200, getMassages()));
             }
+
         };
 
         contactUsIntractor = new ContactUsIntractor(contactUsDAO, contactUSRequest,authKeyDAO);
@@ -72,9 +76,16 @@ public class ContactUsIntractorTest {
     void stressCondition() {
         contactUSRequest = new ContactUSRequest() {
             @Override
-            public void sendMassageToServer(String massage, OnRequestDone<Void> onRequestDone) {
+            public void sendMassageToServer(String token, ContactUsMassagePayLoad massage, OnRequestDone<Void> onRequestDone) {
                 onRequestDone.onResponse(new ResponseModel<Void>(new Throwable()));
             }
+
+            @Override
+            public void getMassagesHistoryFromBookHub(String token, OnRequestDone<List<AdminMassageReports>> onRequestDone) {
+                onRequestDone.onResponse(new ResponseModel<List<AdminMassageReports>>(new Throwable()));
+            }
+
+
         };
         contactUsIntractor = new ContactUsIntractor(contactUsDAO, contactUSRequest,authKeyDAO);
 
@@ -83,12 +94,7 @@ public class ContactUsIntractorTest {
     @Test
     public void sendMassageToSupportTeam_okCondition() throws Exception {
         onOk();
-        contactUsIntractor.sendMassageToSupportTeam("", new OnIntractor<ContactUsState>() {
-            @Override
-            public void onDone(ContactUsState viewState) {
-                assertTrue(viewState instanceof ContactUsState.MassageSentState);
-            }
-        });
+        contactUsIntractor.sendMassageToSupportTeam(new ContactUsMassagePayLoad(), viewState -> assertTrue(viewState instanceof ContactUsState.MassageSentState));
 
 
     }
@@ -96,12 +102,32 @@ public class ContactUsIntractorTest {
     @Test
     public void sendMassageToSupportTeam_NetError() throws Exception {
         stressCondition();
-        contactUsIntractor.sendMassageToSupportTeam("", new OnIntractor<ContactUsState>() {
-            @Override
-            public void onDone(ContactUsState viewState) {
-                assertTrue(viewState instanceof ContactUsState.OnNetError);
-            }
+        contactUsIntractor.sendMassageToSupportTeam(new ContactUsMassagePayLoad(), viewState -> assertTrue(viewState instanceof ContactUsState.OnNetError));
+    }
+
+    @Test
+    public void getMassagesHistory_Ok(){
+        onOk();
+        contactUsIntractor.getMssagesHistory(viewState -> {
+            assertTrue(viewState instanceof ContactUsState.GetHistoryState);
         });
+    }
+
+    @Test
+    public void getMassagesHistory_NetError(){
+        stressCondition();
+        contactUsIntractor.getMssagesHistory(viewState -> {
+            assertTrue(viewState instanceof ContactUsState.OnNetError);
+        });
+    }
+
+    public List<AdminMassageReports> getMassages(){
+        AdminMassageReports adminMassageReports = new AdminMassageReports("bug","you have bug",true,"we have fixed the problem");
+        List<AdminMassageReports> list = new ArrayList<>();
+        for (int i = 0;i<20;i++){
+            list.add(adminMassageReports);
+        }
+        return list;
     }
 
 }

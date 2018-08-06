@@ -39,6 +39,16 @@ public class Ads extends BaseModel {
     @Column
     private boolean isPromoted;
 
+    public Ads() {
+    }
+
+    public Ads(Book book, String location, User user, long timePosted) {
+        this.book = book;
+        this.location = location;
+        this.user = user;
+        this.timePosted = timePosted;
+    }
+
     public boolean isPromoted() {
         return isPromoted;
     }
@@ -47,100 +57,89 @@ public class Ads extends BaseModel {
         isPromoted = promoted;
     }
 
-    public Ads() {
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getAdvertismentID() {
+        return advertismentID;
+    }
+
+    public void setAdvertismentID(String advertismentID) {
+        this.advertismentID = advertismentID;
+    }
+
+    public Book getBook() {
+        return book;
+    }
+
+    public void setBook(Book book) {
+        this.book = book;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public long getTimePosted() {
+        return timePosted;
+    }
+
+    public void setTimePosted(long timePosted) {
+        this.timePosted = timePosted;
+    }
+
+
+    public class AdvertismentBuilder {
+
+        private Book book;
+        private String location;
+        private User user;
+        private long timePosted;
+
+
+        public AdvertismentBuilder setBook(Book book) {
+            this.book = book;
+            return this;
+        }
+
+        public AdvertismentBuilder setLocation(String location) {
+            this.location = location;
+            return this;
+
+        }
+
+        public AdvertismentBuilder setUser(User user) {
+            this.user = user;
+            return this;
+
+        }
+
+        public AdvertismentBuilder setTime(long timePosted) {
+            this.timePosted = timePosted;
+            return this;
+
+        }
+
+        public Ads build() {
+            return new Ads(book, location, user, timePosted);
+        }
     }
 }
 
-////    public Ads(Book book, String location, User user, long timePosted) {
-////        this.book = book;
-////        this.location = location;
-////        this.user = user;
-////        this.timePosted = timePosted;
-////    }
-////
-////    public int getId() {
-////        return id;
-////    }
-////
-////    public void setId(int id) {
-////        this.id = id;
-////    }
-////
-////    public String getAdvertismentID() {
-////        return advertismentID;
-////    }
-////
-////    public void setAdvertismentID(String advertismentID) {
-////        this.advertismentID = advertismentID;
-////    }
-////
-////    public Book getBook() {
-////        return book;
-////    }
-////
-////    public void setBook(Book book) {
-////        this.book = book;
-////    }
-////
-////    public String getLocation() {
-////        return location;
-////    }
-////
-////    public void setLocation(String location) {
-////        this.location = location;
-////    }
-////
-////    public User getUser() {
-////        return user;
-////    }
-////
-////    public void setUser(User user) {
-////        this.user = user;
-////    }
-////
-////    public long getTimePosted() {
-////        return timePosted;
-////    }
-////
-////    public void setTimePosted(long timePosted) {
-////        this.timePosted = timePosted;
-////    }
-//
-//import com.example.rasam.bookhubadmins.pojos.ads.User;
-//
-//public class AdvertismentBuilder {
-//
-//    private Book book;
-//    private String location;
-//    private User user;
-//    private long timePosted;
-//
-//
-//    public AdvertismentBuilder setBook(Book book) {
-//        this.book = book;
-//        return this;
-//    }
-//
-//    public AdvertismentBuilder setLocation(String location) {
-//        this.location = location;
-//        return this;
-//
-//    }
-//
-//    public AdvertismentBuilder setUser(User user) {
-//        this.user = user;
-//        return this;
-//
-//    }
-//
-//    public AdvertismentBuilder setTime(long timePosted) {
-//        this.timePosted = timePosted;
-//        return this;
-//
-//    }
-//
-//    public Ads build() {
-//        return new Ads(book, location, user, timePosted);
-//    }
-//}
-//

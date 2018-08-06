@@ -1,41 +1,42 @@
 package com.example.rasam.bookhubadmins.contactUs.view;
 
 import android.os.Bundle;
-import android.widget.Toast;
+import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+
 
 import com.example.rasam.bookhubadmins.R;
-import com.example.rasam.bookhubadmins.contactUs.presenter.ContactDependency;
-import com.example.rasam.bookhubadmins.contactUs.presenter.ContactUsPresenter;
-import com.example.rasam.bookhubadmins.contactUs.presenter.ContactUsState;
-import com.example.rasam.bookhubadmins.maintanance.infraStructure.DataBase.DAQ;
-import com.example.rasam.bookhubadmins.maintanance.infraStructure.net.RequestManager;
-import com.example.rasam.bookhubadmins.maintanance.parent.ParentActivity;
+import com.example.rasam.bookhubadmins.contactUs.view.contact_us.ContactUsFragment;
+import com.example.rasam.bookhubadmins.contactUs.view.history.ReportsHistory;
+import com.example.rasam.bookhubadmins.contactUs.view.utils.ContactusPagerAdapter;
 
-/**
- * Created by R.Arabzadeh Taktell on 7/27/2018.
- */
+import java.util.ArrayList;
 
-public class ContactUsActivity extends ParentActivity<ContactUsView,ContactUsPresenter> implements ContactUsView {
+public class ContactUsActivity extends AppCompatActivity{
+    Toolbar toolbar;
+    ViewPager viewPager;
+    TabLayout tabLayout;
     @Override
-    protected ContactUsPresenter stablishPresenter() {
-        return new ContactUsPresenter(this, ContactDependency.inject());
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_contact_us);
 
+
+        viewPager = findViewById(R.id.viewpager);
+        setupViewPager();
+
+//        tabLayout = findViewById(R.id.tabs);
+//       tabs tabLayout.setupWithViewPager(viewPager);
     }
 
-    @Override
-    public void render(ContactUsState contactUsState) {
-        if (contactUsState instanceof ContactUsState.MassageSentState){
-            Toast.makeText(this,"خطا در ارسال پیام",Toast.LENGTH_SHORT).show();
-            finish();
-        }else if (contactUsState instanceof ContactUsState.OnNetError){
-            Toast.makeText(this,"خطا در ارسال پیام",Toast.LENGTH_SHORT).show();
-        }else {
-            throw new IllegalArgumentException("Wrong State Generated in Contact US");
-        }
+    private void setupViewPager() {
+        ContactusPagerAdapter adapter = new ContactusPagerAdapter(getSupportFragmentManager(),null);
+//        adapter.addFragment(new ContactUsFragment(), "ارسال پیام");
+//        adapter.addFragment(new ReportsHistory(), "تاریخچه");
+        viewPager.setAdapter(adapter);
     }
 }

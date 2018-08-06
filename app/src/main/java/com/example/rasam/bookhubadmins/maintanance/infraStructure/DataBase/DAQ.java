@@ -6,6 +6,7 @@ import com.example.rasam.bookhubadmins.historyManager.entity.HistoryDataBaseMang
 import com.example.rasam.bookhubadmins.main.entity.MainDataBaseActions;
 import com.example.rasam.bookhubadmins.maintanance.abstractions.OnDAOJobFinish;
 import com.example.rasam.bookhubadmins.pojos.AuthKey;
+import com.example.rasam.bookhubadmins.pojos.ContactUsMassagePayLoad;
 import com.example.rasam.bookhubadmins.pojos.ads.Ads;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
 
@@ -32,7 +33,7 @@ public class DAQ implements AuthKeyDAO,MainDataBaseActions,ContactUsDAO,HistoryD
                 onDone.onDone(new DataBaseModel<AuthKey>(null, true));
             }
         } catch (Exception e) {
-            onDone.onDone(new DataBaseModel(e.getCause()));
+            onDone.onDone(new DataBaseModel<>(e.getCause()));
         }
 
     }
@@ -45,7 +46,7 @@ public class DAQ implements AuthKeyDAO,MainDataBaseActions,ContactUsDAO,HistoryD
             onDAO.onDone(new DataBaseModel<AuthKey>(authKey, true));
         } catch (Exception e) {
             e.printStackTrace();
-            onDAO.onDone(new DataBaseModel(e.getCause()));
+            onDAO.onDone(new DataBaseModel<>(e.getCause()));
         }
     }
 
@@ -73,10 +74,7 @@ public class DAQ implements AuthKeyDAO,MainDataBaseActions,ContactUsDAO,HistoryD
     }
 
 
-    @Override
-    public void saveMassageToDataBase(OnDAOJobFinish<Void> onDAOJobFinish) {
 
-    }
 
     @Override
     public void getPromotedAds(OnDAOJobFinish<List<Ads>> onDAOJobFinish) {
@@ -85,6 +83,11 @@ public class DAQ implements AuthKeyDAO,MainDataBaseActions,ContactUsDAO,HistoryD
 
     @Override
     public void getDeletedAds(OnDAOJobFinish<List<Ads>> onDAOJobFinish) {
+
+    }
+
+    @Override
+    public void saveMassageToDataBase(ContactUsMassagePayLoad payLoad, OnDAOJobFinish<Void> onDAOJobFinish) {
 
     }
 }
