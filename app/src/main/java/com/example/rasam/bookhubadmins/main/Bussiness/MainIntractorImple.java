@@ -74,7 +74,7 @@ public class MainIntractorImple implements MainIntractorFacade {
 
         mainRequests.getNextPsge(mainCachManager.getLastItemNumber(), new OnRequestDone<List<Ads>>() {
             @Override
-            public void onResponse(ResponseModel<List<Ads>> responseModel) {
+            public void onResponse(ResponseModel<List<Ads>> responseModel)  u{
                 if (responseModel.getThrowable() != null) {
                     onIntractor.onDone(new MainState.NetError());
                 } else if (responseModel.getStatusCode() == 200) {

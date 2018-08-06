@@ -127,7 +127,6 @@ class MainActivity : MainView, ParentActivity<MainView, MainPresenter>(), OnSwip
 
     override fun refreshList(adsList: MutableList<Ads>?) {
         swipeRefreshLayout.setRefreshing(false)
-
         adapter.refreshList(adsList)
     }
 
@@ -137,7 +136,7 @@ class MainActivity : MainView, ParentActivity<MainView, MainPresenter>(), OnSwip
 
 
     override fun showLoading() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
     }
 
     override fun stablishPresenter(): MainPresenter {

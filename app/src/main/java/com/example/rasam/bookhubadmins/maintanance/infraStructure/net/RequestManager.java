@@ -94,9 +94,11 @@ public class RequestManager implements SplashRequests, AuthKeyRequests, Complete
     }
 
     @Override
-    public void getMassagesHistoryFromBookHub(String token, OnIntractor<List<AdminMassageReports>> onIntractor) {
+    public void getMassagesHistoryFromBookHub(String token, OnRequestDone<List<AdminMassageReports>> onIntractor) {
 
     }
+
+
 
     @Override
     public void getDeletedAddHistory(String token, OnRequestDone<List<Ads>> onRequestDone) {
