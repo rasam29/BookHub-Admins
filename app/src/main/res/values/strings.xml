@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">BookHubAdmins</string>
+    <string name="app_name">BookHub</string>
     <string name="authKey" >کد احزار هویت که بوک هاب در اختیار شما قرار داده است را وارد کنید!!</string>
     <string name="authKey_title">کد احراز هویت!</string>
     <string name="phoneNumber_title">تلفن همراه خود را وارد کنید</string>

@@ -37,7 +37,9 @@ public class ContactUsIntractorTest {
 
     @Before
     public void setUp() throws Exception {
-        contactUsDAO = onDAOJobFinish -> onDAOJobFinish.onDone(new DataBaseModel<Void>(true));
+        contactUsDAO = (payLoad, onDAOJobFinish) -> {
+            onDAOJobFinish.onDone(new DataBaseModel<Void>(true));
+        };
         authKeyDAO = new AuthKeyDAO() {
             @Override
             public void deleteAuthKey(OnDAOJobFinish<AuthKey> onDone) {

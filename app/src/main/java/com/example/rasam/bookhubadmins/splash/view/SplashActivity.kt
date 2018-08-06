@@ -16,8 +16,17 @@ import com.example.rasam.bookhubadmins.pojos.UpdateModel
 import com.example.rasam.bookhubadmins.splash.Bussiness.SplashViewState
 import com.example.rasam.bookhubadmins.splash.Bussiness.interactor.SplashIntractor
 import com.example.rasam.bookhubadmins.splash.Presenter.SplashPresenter
+import android.animation.AnimatorInflater
+import android.animation.AnimatorSet
+import android.content.Context
+import android.view.animation.AnimationUtils
+import android.widget.ImageView
+
 
 class SplashActivity : SplashView, ParentActivity<SplashView, SplashPresenter>() {
+
+    var context:Context = this
+    lateinit var appIcon:ImageView
     override fun stablishPresenter(): SplashPresenter {
         return SplashPresenter(this, SplashIntractor(RequestManager(), DAQ()))
     }
@@ -27,7 +36,10 @@ class SplashActivity : SplashView, ParentActivity<SplashView, SplashPresenter>()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
         ButterKnife.bind(this)
+
+        appIcon = findViewById(R.id.app_icon)
         presenter.attachView(this)
+        doSomeAnimation()
         presenter.checkForUpdate()
 
     }
@@ -69,7 +81,7 @@ class SplashActivity : SplashView, ParentActivity<SplashView, SplashPresenter>()
     }
 
     fun gotoMain() {
-        doSomeAnimation()
+
         Handler().postDelayed(Runnable {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
@@ -77,14 +89,16 @@ class SplashActivity : SplashView, ParentActivity<SplashView, SplashPresenter>()
     }
 
     fun gotoAuth() {
-        doSomeAnimation()
+
         Handler().postDelayed(Runnable {
             val intent = Intent(this, RegisterActivity::class.java)
             startActivity(intent)
         },2000)
     }
     fun doSomeAnimation(){
-        //todo its optional could iplemented in next release
+        val anim = AnimationUtils.loadAnimation(context,R.anim.splash_icon_anim)
+        appIcon.startAnimation(anim)
+        anim.start()
     }
 
     override fun onBackPressed() {
