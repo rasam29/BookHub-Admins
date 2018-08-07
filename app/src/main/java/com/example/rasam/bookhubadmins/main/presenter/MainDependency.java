@@ -19,7 +19,7 @@ public class MainDependency {
 
     public static MainIntractorImple inject() {
         if (mainIntractorImple == null) {
-            mainIntractorImple = new MainIntractorImple(getDataBAseManager(), getRequetManger(), getCachMager());
+            mainIntractorImple = new MainIntractorImple(getDataBAseManager(), getRequetManger(), getCachMager(),getDataBAseManager());
         }
         return mainIntractorImple;
     }

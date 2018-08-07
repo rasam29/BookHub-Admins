@@ -38,18 +38,31 @@ public class ReportsHistory extends ParentFragment<ContactUsView, ContactUsPrese
     List<AdminMassageReports> adminMassageReports = new ArrayList<>();
     ReportHistoryAdapter reportHistoryAdapter;
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_report_history, container);
-        ButterKnife.bind(this, view);
-        setUpRecyclerView();
-        presenter.getListOfMassagesHistory();
-        swipeRefreshLayout.setOnRefreshListener(() -> {
-            presenter.getListOfMassagesHistory();
-        });
+        View view = inflater.inflate(R.layout.fragment_report_history, container, false);
+//        ButterKnife.bind(this, view);
+
+//        recyclerView = view.findViewById(R.id.list);
+//        swipeRefreshLayout = view.findViewById(R.id.refreshLayout);
+//        setUpRecyclerView();
+//        swipeRefreshLayout.setOnRefreshListener(() -> {
+//            presenter.getListOfMassagesHistory();
+//        });
 
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        presenter.getListOfMassagesHistory();
     }
 
     @Override

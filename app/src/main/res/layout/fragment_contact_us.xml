@@ -5,138 +5,138 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <android.support.v7.widget.Toolbar
-        android:layout_width="match_parent"
-        android:layout_height="?actionBarSize"
-        android:background="@color/colorPrimary"></android.support.v7.widget.Toolbar>
+    <!--<android.support.v7.widget.Toolbar-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="?actionBarSize"-->
+        <!--android:background="@color/colorPrimary"></android.support.v7.widget.Toolbar>-->
 
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:orientation="vertical">
-
-
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="4"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <me.grantland.widget.AutofitTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
-                android:text="بوک هاب"
-                android:textColor="@color/colorPrimary"
-                android:textSize="17sp" />
-
-            <me.grantland.widget.AutofitTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="ارسال پیام به"
-                android:textColor="@android:color/black"
-                android:textSize="17sp" />
-
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="2"
-            android:orientation="horizontal">
-
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="3"
-                android:gravity="center">
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:textColor="@android:color/black"
-                    android:padding="5dp"
-                    android:id="@+id/subjectEditTxt"
-                    android:background="@drawable/add_desc_edit_text" />
-
-            </LinearLayout>
+    <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_marginLeft="20dp"-->
+        <!--android:layout_marginRight="20dp"-->
+        <!--android:orientation="vertical">-->
 
 
 
 
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center">
+        <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="0dp"-->
+            <!--android:layout_weight="4"-->
+            <!--android:gravity="center"-->
+            <!--android:orientation="horizontal">-->
 
-                <me.grantland.widget.AutofitTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="موضوع پیام"
-                    android:textColor="@android:color/black" />
+            <!--<me.grantland.widget.AutofitTextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginRight="10dp"-->
+                <!--android:text="بوک هاب"-->
+                <!--android:textColor="@color/colorPrimary"-->
+                <!--android:textSize="17sp" />-->
 
-            </LinearLayout>
+            <!--<me.grantland.widget.AutofitTextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="ارسال پیام به"-->
+                <!--android:textColor="@android:color/black"-->
+                <!--android:textSize="17sp" />-->
 
-        </LinearLayout>
-
-
-
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginTop="10dp"
-            android:layout_weight="9"
-            android:orientation="horizontal">
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/add_desc_edit_text"
-                android:gravity="right|top"
-                android:padding="15dp"
-
-                android:id="@+id/MainMassage"
-                android:hint="متن پیام"
-                android:textColor="@android:color/black" />
-
-        </RelativeLayout>
+        <!--</LinearLayout>-->
 
 
+        <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="0dp"-->
+            <!--android:layout_weight="2"-->
+            <!--android:orientation="horizontal">-->
 
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginTop="10dp"
-            android:layout_weight="2"
-            android:gravity="center">
+            <!--<LinearLayout-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_weight="3"-->
+                <!--android:gravity="center">-->
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/setting_confirm"
-                android:text="ارسال"
-                android:id="@+id/sendButton_contactUs"
-                android:textColor="@android:color/white"
-                android:textSize="17sp" />
+                <!--<EditText-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:textColor="@android:color/black"-->
+                    <!--android:padding="5dp"-->
+                    <!--android:id="@+id/subjectEditTxt"-->
+                    <!--android:background="@drawable/add_desc_edit_text" />-->
 
-        </LinearLayout>
+            <!--</LinearLayout>-->
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="3.5" />
 
-    </LinearLayout>
+
+
+            <!--<LinearLayout-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_weight="1"-->
+                <!--android:gravity="center">-->
+
+                <!--<me.grantland.widget.AutofitTextView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="موضوع پیام"-->
+                    <!--android:textColor="@android:color/black" />-->
+
+            <!--</LinearLayout>-->
+
+        <!--</LinearLayout>-->
+
+
+
+
+        <!--<RelativeLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="0dp"-->
+            <!--android:layout_marginTop="10dp"-->
+            <!--android:layout_weight="9"-->
+            <!--android:orientation="horizontal">-->
+
+            <!--<EditText-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:background="@drawable/add_desc_edit_text"-->
+                <!--android:gravity="right|top"-->
+                <!--android:padding="15dp"-->
+
+                <!--android:id="@+id/MainMassage"-->
+                <!--android:hint="متن پیام"-->
+                <!--android:textColor="@android:color/black" />-->
+
+        <!--</RelativeLayout>-->
+
+
+
+
+        <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="0dp"-->
+            <!--android:layout_marginTop="10dp"-->
+            <!--android:layout_weight="2"-->
+            <!--android:gravity="center">-->
+
+            <!--<Button-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:background="@drawable/setting_confirm"-->
+                <!--android:text="ارسال"-->
+                <!--android:id="@+id/sendButton_contactUs"-->
+                <!--android:textColor="@android:color/white"-->
+                <!--android:textSize="17sp" />-->
+
+        <!--</LinearLayout>-->
+
+        <!--<RelativeLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="0dp"-->
+            <!--android:layout_weight="3.5" />-->
+
+    <!--</LinearLayout>-->
 
 </LinearLayout>

@@ -17,7 +17,7 @@ import com.example.rasam.bookhubadmins.contactUs.view.utils.ContactusPagerAdapte
 import java.util.ArrayList;
 
 public class ContactUsActivity extends AppCompatActivity{
-    Toolbar toolbar;
+
     ViewPager viewPager;
     TabLayout tabLayout;
     @Override
@@ -27,16 +27,13 @@ public class ContactUsActivity extends AppCompatActivity{
 
 
         viewPager = findViewById(R.id.viewpager);
-        setupViewPager();
-
-//        tabLayout = findViewById(R.id.tabs);
-//       tabs tabLayout.setupWithViewPager(viewPager);
-    }
-
-    private void setupViewPager() {
-        ContactusPagerAdapter adapter = new ContactusPagerAdapter(getSupportFragmentManager(),null);
-//        adapter.addFragment(new ContactUsFragment(), "ارسال پیام");
-//        adapter.addFragment(new ReportsHistory(), "تاریخچه");
+        ContactusPagerAdapter adapter = new ContactusPagerAdapter(getSupportFragmentManager());
+        viewPager.setOffscreenPageLimit(2);
         viewPager.setAdapter(adapter);
+//
+        tabLayout = findViewById(R.id.tabs);
+        tabLayout.setupWithViewPager(viewPager);
     }
+
+
 }

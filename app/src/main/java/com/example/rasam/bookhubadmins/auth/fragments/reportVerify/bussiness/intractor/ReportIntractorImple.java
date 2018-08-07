@@ -41,14 +41,11 @@ public class ReportIntractorImple implements ReportIntractorFacade {
 
     @Override
     public void saveTokenToDataBase(String token, final OnIntractor<ReportViewState> onDone) {
-        authKeyDAO.insertAuthKey(token, new OnDAOJobFinish<AuthKey>() {
-            @Override
-            public void onDone(DataBaseModel<AuthKey> dataBaseModel) {
-                if (dataBaseModel.getThrowable() == null) {
-                    onDone.onDone(new ReportViewState.OnCodeOk());
-                }
-
+        authKeyDAO.insertAuthKey(token, dataBaseModel -> {
+            if (dataBaseModel.getThrowable() == null) {
+                onDone.onDone(new ReportViewState.OnCodeOk());
             }
+
         });
 
     }

@@ -6,8 +6,10 @@ import com.example.rasam.bookhubadmins.main.entity.MainDataBaseActions;
 import com.example.rasam.bookhubadmins.maintanance.abstractions.OnDAOJobFinish;
 import com.example.rasam.bookhubadmins.maintanance.abstractions.OnIntractor;
 import com.example.rasam.bookhubadmins.maintanance.abstractions.OnRequestDone;
+import com.example.rasam.bookhubadmins.maintanance.infraStructure.DataBase.AuthKeyDAO;
 import com.example.rasam.bookhubadmins.maintanance.infraStructure.DataBase.DataBaseModel;
 import com.example.rasam.bookhubadmins.maintanance.infraStructure.net.ResponseModel;
+import com.example.rasam.bookhubadmins.pojos.AuthKey;
 import com.example.rasam.bookhubadmins.pojos.ads.Ads;
 import com.example.rasam.bookhubadmins.productInfo.presenter.MoreDetailsState;
 
@@ -20,12 +22,13 @@ public class MoreIntractorImple implements MoreDetailsIntractorFacade {
     private MainDataBaseActions mainDataBaseActions;
     private SimpleAdvertismentAction requestManger;
     private MainCachManager mainCachManager;
+    private AuthKeyDAO authKeyDAO;
 
-
-    public MoreIntractorImple(MainDataBaseActions mainDataBaseActions, SimpleAdvertismentAction requestManger,MainCachManager mainCachManager) {
+    public MoreIntractorImple(MainDataBaseActions mainDataBaseActions, SimpleAdvertismentAction requestManger, MainCachManager mainCachManager, AuthKeyDAO authKey) {
         this.mainDataBaseActions = mainDataBaseActions;
         this.requestManger = requestManger;
         this.mainCachManager = mainCachManager;
+        this.authKeyDAO = authKey;
     }
 
 
@@ -41,47 +44,49 @@ public class MoreIntractorImple implements MoreDetailsIntractorFacade {
     @Override
     public void promote(final OnIntractor<MoreDetailsState> onIntractor) {
         final Ads ads = mainCachManager.getSelectedAdvertisment();
-        requestManger.promoteAds(ads.getAdvertismentID(), new OnRequestDone<Void>() {
-            @Override
-            public void onResponse(ResponseModel<Void> responseModel) {
-                if (responseModel.getThrowable() == null) {
-                    if (responseModel.getStatusCode() == 200) {
-                        mainDataBaseActions.savePromotedAds(ads, new OnDAOJobFinish<Void>() {
-                            @Override
-                            public void onDone(DataBaseModel<Void> dataBaseModel) {
-                                if (dataBaseModel.getThrowable() == null) {
-                                    onIntractor.onDone(new MoreDetailsState.PromoteState());
-                                }
-                            }
-                        });
-                    }
-                } else {
-                    onIntractor.onDone(new MoreDetailsState.NetError());
-                }
-            }
-        });
+       authKeyDAO.getAuthKey(dataBaseModel -> {
+           if (dataBaseModel.getThrowable() == null){
+               requestManger.promoteAds(dataBaseModel.getData().getKey(),ads.getAdvertismentID(), responseModel -> {
+                   if (responseModel.getThrowable() == null) {
+                       if (responseModel.getStatusCode() == 200) {
+                           mainDataBaseActions.savePromotedAds(ads, dataBaseModel1 -> {
+                               if (dataBaseModel1.getThrowable() == null) {
+                                   onIntractor.onDone(new MoreDetailsState.PromoteState());
+                               }
+                           });
+                       }
+                   } else {
+                       onIntractor.onDone(new MoreDetailsState.NetError());
+                   }
+               });
+           }else {
+               throw new IllegalArgumentException("dataBaseError");
+           }
+       });
     }
 
     @Override
     public void delete(final OnIntractor<MoreDetailsState> onIntractor) {
         final Ads ads = mainCachManager.getSelectedAdvertisment();
-        requestManger.deleteAds(ads.getAdvertismentID(), new OnRequestDone<Void>() {
-            @Override
-            public void onResponse(ResponseModel<Void> responseModel) {
-                if (responseModel.getThrowable() == null) {
-                    if (responseModel.getStatusCode() == 200) {
-                        mainDataBaseActions.saveDeletedAds(ads, new OnDAOJobFinish<Void>() {
-                            @Override
-                            public void onDone(DataBaseModel<Void> dataBaseModel) {
-                                if (dataBaseModel.getThrowable() == null) {
+
+
+        authKeyDAO.getAuthKey(dataBaseModel -> {
+            if (dataBaseModel.getThrowable() == null){
+                requestManger.deleteAds(dataBaseModel.getData().getKey(),ads.getAdvertismentID(), responseModel -> {
+                    if (responseModel.getThrowable() == null) {
+                        if (responseModel.getStatusCode() == 200) {
+                            mainDataBaseActions.saveDeletedAds(ads, dataBaseModel1 -> {
+                                if (dataBaseModel1.getThrowable() == null) {
                                     onIntractor.onDone(new MoreDetailsState.DeleteState());
                                 }
-                            }
-                        });
+                            });
+                        }
+                    } else {
+                        onIntractor.onDone(new MoreDetailsState.NetError());
                     }
-                } else {
-                    onIntractor.onDone(new MoreDetailsState.NetError());
-                }
+                });
+            }else {
+                throw new IllegalArgumentException("dataBaseError");
             }
         });
 

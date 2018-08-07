@@ -97,32 +97,48 @@ public class HistoryIntractor implements HistoryIntractorFacade {
 
 
     public void promoteAdd(Ads ads, OnIntractor<HistoryState> onIntractor) {
-        simpleAdvertismentAction.promoteAds(ads.getAdvertismentID(), responseModel -> {
-            manipulateHistoryLogic = new ManipulateHistoryLogic(responseModel);
-            if (manipulateHistoryLogic.isAdvertismentDeleted()){
+        authKeyDAO.getAuthKey(dataBaseModel -> {
+            if (dataBaseModel.getThrowable() == null){
+                simpleAdvertismentAction.promoteAds(dataBaseModel.getData().getKey(),ads.getAdvertismentID(), responseModel -> {
+                    manipulateHistoryLogic = new ManipulateHistoryLogic(responseModel);
+                    if (manipulateHistoryLogic.isAdvertismentDeleted()){
 
-                onIntractor.onDone(new HistoryState.PromoteState());
-            }else if(manipulateHistoryLogic.isExpired()){
-                onIntractor.onDone(new HistoryState.AdExpired());
+                        onIntractor.onDone(new HistoryState.PromoteState());
+                    }else if(manipulateHistoryLogic.isExpired()){
+                        onIntractor.onDone(new HistoryState.AdExpired());
+                    }else {
+                        onIntractor.onDone(new HistoryState.OnNetError());
+                    }
+                });
             }else {
-                onIntractor.onDone(new HistoryState.OnNetError());
+                throw new RuntimeException("dataBAse error here");
             }
         });
 
     }
 
     public void deleteAdd(Ads ads, OnIntractor<HistoryState> onIntractor) {
-        simpleAdvertismentAction.deleteAds(ads.getAdvertismentID(), responseModel -> {
-            manipulateHistoryLogic = new ManipulateHistoryLogic(responseModel);
-            if (manipulateHistoryLogic.isAdvertismentDeleted()){
 
-                onIntractor.onDone(new HistoryState.DeleteState());
-            }else if(manipulateHistoryLogic.isExpired()){
-                onIntractor.onDone(new HistoryState.AdExpired());
+
+        authKeyDAO.getAuthKey(dataBaseModel -> {
+            if (dataBaseModel.getThrowable() == null){
+                simpleAdvertismentAction.deleteAds(dataBaseModel.getData().getKey(),ads.getAdvertismentID(), responseModel -> {
+                    manipulateHistoryLogic = new ManipulateHistoryLogic(responseModel);
+                    if (manipulateHistoryLogic.isAdvertismentDeleted()){
+
+                        onIntractor.onDone(new HistoryState.DeleteState());
+                    }else if(manipulateHistoryLogic.isExpired()){
+                        onIntractor.onDone(new HistoryState.AdExpired());
+                    }else {
+                        onIntractor.onDone(new HistoryState.OnNetError());
+                    }
+                });
             }else {
-                onIntractor.onDone(new HistoryState.OnNetError());
+                throw new RuntimeException("dataBAse error here");
             }
         });
+
+
     }
 
 

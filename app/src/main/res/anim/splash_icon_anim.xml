@@ -3,15 +3,15 @@
     android:fillAfter="true"
     >
 
-    <alpha
-        android:duration="700"
-        android:fromAlpha="20"
-        android:toAlpha="100%" />
+    <!--<alpha-->
+        <!--android:duration="700"-->
+        <!--android:fromAlpha="20"-->
+        <!--android:toAlpha="100" />-->
 
-    <translate
-        android:duration="700"
-        android:fromYDelta="50"
-        android:toYDelta="-50" />
+    <!--<translate-->
+        <!--android:duration="700"-->
+        <!--android:fromYDelta="50"-->
+        <!--android:toYDelta="-50" />-->
 
 
 </set>

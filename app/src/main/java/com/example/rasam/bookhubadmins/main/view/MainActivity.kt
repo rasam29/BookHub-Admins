@@ -87,10 +87,13 @@ class MainActivity : MainView, ParentActivity<MainView, MainPresenter>(), OnSwip
                 super.onScrolled(recyclerView, dx, dy)
 
                 if (recyclerView != null) {
-                    if (!recyclerView.canScrollVertically(1)){
+                    if (!recyclerView.canScrollVertically(1)) {
+
+                        if (!isLoading) {
+                            showLoadingInList()
+                            presenter.getMoreAds()
+                        }
                         isLoading = true
-                        showLoading()
-                        presenter.getMoreAds()
                     }
                 }
             }
@@ -120,7 +123,10 @@ class MainActivity : MainView, ParentActivity<MainView, MainPresenter>(), OnSwip
             deleteAds(mainState.ads)
             isLoading = false
         } else if (mainState is MainState.NextPaginationState) {
+            isLoading = false
+
             appendListToRecyclerView(mainState.list)
+
         } else if (mainState is MainState.PromoteState) {
             Toast.makeText(context, "آگهی تایید شد", Toast.LENGTH_SHORT).show()
             deleteAds(mainState.ads)
@@ -145,15 +151,25 @@ class MainActivity : MainView, ParentActivity<MainView, MainPresenter>(), OnSwip
         startActivity(Intent(this, MoreDetailsActivity::class.java))
     }
 
+    fun showLoadingInList() {
+        adapter.addLoading()
+    }
+
 
     override fun appendListToRecyclerView(adsList: MutableList<Ads>?) {
         adapter.appendList(adsList)
     }
 
     override fun refreshList(adsList: MutableList<Ads>?) {
-        swipeRefreshLayout.setRefreshing(false)
+
+        swipeRefreshLayout.isRefreshing = false
         adapter.refreshList(adsList)
 
+    }
+
+    override fun onStop() {
+        super.onStop()
+        presenter.detachView()
     }
 
     fun deleteAds(ads: Ads) {
@@ -162,7 +178,7 @@ class MainActivity : MainView, ParentActivity<MainView, MainPresenter>(), OnSwip
 
 
     override fun showLoading() {
-        Toast.makeText(context,"در حال بارگزاری",Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, "در حال بارگزاری", Toast.LENGTH_SHORT).show()
     }
 
     override fun stablishPresenter(): MainPresenter {

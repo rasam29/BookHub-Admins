@@ -1,5 +1,7 @@
 package com.example.rasam.bookhubadmins.maintanance.infraStructure.net;
 
+import android.os.Handler;
+
 import com.example.rasam.bookhubadmins.SimpleAdvertismentAction;
 import com.example.rasam.bookhubadmins.contactUs.entity.ContactUSRequest;
 import com.example.rasam.bookhubadmins.historyManager.entity.HistoryRequests;
@@ -25,7 +27,7 @@ import com.example.rasam.bookhubadmins.pojos.authModels.ReportVerificationModel;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RequestManager implements SplashRequests, AuthKeyRequests, CompleteAuthRequests, ReportVerificationRequest, RegisterRequest, MainRequests,ContactUSRequest,SimpleAdvertismentAction,HistoryRequests {
+public class RequestManager implements SplashRequests, AuthKeyRequests, ReportVerificationRequest, RegisterRequest, MainRequests,ContactUSRequest,SimpleAdvertismentAction,HistoryRequests {
     public void checkForUpdate(OnRequestDone<UpdateModel> onRequestDone) {
         //todo call the backend whenever the back end is ready
         onRequestDone.onResponse(new ResponseModel<>(200, new UpdateModel(false, null, null)));
@@ -51,39 +53,41 @@ public class RequestManager implements SplashRequests, AuthKeyRequests, Complete
 
     @Override
     public void verifyReport(ReportVerificationModel reportModel, OnRequestDone<String> onRequestDone) {
-        onRequestDone.onResponse(new ResponseModel<>(200, "YourAythRsisfjkgnj wuj2398432ui4iu24jh"));
+        onRequestDone.onResponse(new ResponseModel<>(200, "YourAythRsisfjkgnjwuj2398432ui4iu24jh"));
 
     }
 
 
-    @Override
-    public void completeAuth(CompleteAuthRequests completeAuth, OnRequestDone<String> onRequestDone) {
-        onRequestDone.onResponse(new ResponseModel<>(200, "(MockToken)Bearer LHkjLKjHlKJHSLNjlkjlJHlkjHLKjHlkjHLkjhkljHJlkjhlkJHLKjhLKjhlkjhLK"));
-
-    }
-
 
     @Override
-    public void deleteAds(String adsId, OnRequestDone<Void> onRequestDone) {
-        onRequestDone.onResponse(new ResponseModel<>(200, null));
+    public void deleteAds(String token,String adsId, OnRequestDone<Void> onRequestDone) {
+        delay(() -> {
+            onRequestDone.onResponse(new ResponseModel<>(200, null));
+        });
 
     }
 
     @Override
-    public void promoteAds(String adsId, OnRequestDone<Void> onRequestDone) {
-        onRequestDone.onResponse(new ResponseModel<>(200, null));
+    public void promoteAds(String token,String adsId, OnRequestDone<Void> onRequestDone) {
+        delay(() -> {
+            onRequestDone.onResponse(new ResponseModel<>(200, null));
+        });
     }
 
     @Override
-    public void refreshList(OnRequestDone<List<Ads>> onRequestDone) {
-        onRequestDone.onResponse(new ResponseModel<>(200, getMockAds()));
+    public void refreshList(String token,OnRequestDone<List<Ads>> onRequestDone) {
+       delay(() -> {
+           onRequestDone.onResponse(new ResponseModel<>(200, getMockAds()));
+       });
 
     }
 
     @Override
-    public void getNextPsge(int lastItem, OnRequestDone<List<Ads>> onRequestDone) {
+    public void getNextPsge(String token,int lastItem, OnRequestDone<List<Ads>> onRequestDone) {
 
-        onRequestDone.onResponse(new ResponseModel<>(200, getMockAds()));
+       delay(() -> {
+           onRequestDone.onResponse(new ResponseModel<>(200, getMockAds()));
+       });
 
     }
 
@@ -121,6 +125,7 @@ public class RequestManager implements SplashRequests, AuthKeyRequests, Complete
                 .setName("Clean code")
                 .setNumberOfPages(350)
                 .setPrice(3500)
+                .setPublisher("انتشارات آرزو")
                 .setShabak("ldfksnndfjdvnd")
                 .build();
 
@@ -198,4 +203,9 @@ public class RequestManager implements SplashRequests, AuthKeyRequests, Complete
         }
         return mockMassage;
     }
+
+    public void delay(Runnable runnable){
+        new Handler().postDelayed(runnable,1000);
+    }
+
 }

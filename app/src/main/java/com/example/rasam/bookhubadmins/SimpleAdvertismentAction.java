@@ -7,6 +7,6 @@ import com.example.rasam.bookhubadmins.maintanance.abstractions.OnRequestDone;
  */
 
 public interface SimpleAdvertismentAction {
-    void deleteAds(String adsId, OnRequestDone<Void> onRequestDone);
-    void promoteAds(String adsId, OnRequestDone<Void> onRequestDone);
+    void deleteAds(String token,String adsId, OnRequestDone<Void> onRequestDone);
+    void promoteAds(String token,String adsId, OnRequestDone<Void> onRequestDone);
 }

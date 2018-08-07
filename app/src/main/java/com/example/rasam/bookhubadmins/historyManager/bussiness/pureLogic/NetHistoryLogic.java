@@ -30,7 +30,7 @@ public class NetHistoryLogic {
         } else return false;
     }
 
-     boolean RequestSuccessFul(){
+     public boolean RequestSuccessFul(){
         if (isNetOk() && serverProprlyResponded()){
             return true;
         }else return false;

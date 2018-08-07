@@ -9,10 +9,10 @@ import com.daimajia.swipe.SwipeLayout;
 import com.example.rasam.bookhubadmins.R;
 
 public class MainViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-    public OnSwipeButtonClicked onSwipeButtonClicked;
+    private OnSwipeButtonClicked onSwipeButtonClicked;
 
-    public LinearLayout promoteButton;
-    public LinearLayout deleteButton;
+    private LinearLayout promoteButton;
+    private LinearLayout deleteButton;
 
 
     public TextView price;
@@ -20,7 +20,7 @@ public class MainViewHolder extends RecyclerView.ViewHolder implements View.OnCl
     public TextView publisher;
     public TextView writer;
     public TextView locationDesc;
-    public LinearLayout frontView;
+    private LinearLayout frontView;
 
 
     public MainViewHolder(View itemView, final OnSwipeButtonClicked onSwipeButtonClicked) {
@@ -44,18 +44,8 @@ public class MainViewHolder extends RecyclerView.ViewHolder implements View.OnCl
         locationDesc = itemView.findViewById(R.id.location_list);
 
 
-        promoteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onSwipeButtonClicked.onPromote(view, getAdapterPosition());
-            }
-        });
-        deleteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onSwipeButtonClicked.onDelete(view, getAdapterPosition());
-            }
-        });
+        promoteButton.setOnClickListener(view -> onSwipeButtonClicked.onPromote(view, getAdapterPosition()));
+        deleteButton.setOnClickListener(view -> onSwipeButtonClicked.onDelete(view, getAdapterPosition()));
 
         frontView.setOnClickListener(this);
 

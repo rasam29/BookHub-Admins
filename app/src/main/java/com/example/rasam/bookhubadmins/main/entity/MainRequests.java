@@ -13,6 +13,6 @@ public interface MainRequests extends SimpleAdvertismentAction{
 
 
 
-    void refreshList(OnRequestDone<List<Ads>> onRequestDone);
-    void getNextPsge(int lastItem,OnRequestDone<List<Ads>> onRequestDone);
+    void refreshList(String token,OnRequestDone<List<Ads>> onRequestDone);
+    void getNextPsge(String token,int lastItem,OnRequestDone<List<Ads>> onRequestDone);
 }

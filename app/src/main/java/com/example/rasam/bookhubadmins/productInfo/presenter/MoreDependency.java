@@ -20,7 +20,7 @@ public class MoreDependency {
 
     public static MoreIntractorImple inject() {
         if (moreIntractorImple == null) {
-            moreIntractorImple = new MoreIntractorImple(getDataBAseManager(), getRequetManger(), getCachMager());
+            moreIntractorImple = new MoreIntractorImple(getDataBAseManager(), getRequetManger(), getCachMager(),getDataBAseManager());
         }
         return moreIntractorImple;
     }
