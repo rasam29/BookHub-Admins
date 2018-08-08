@@ -1,5 +1,7 @@
 package com.example.rasam.bookhubadmins.maintanance.infraStructure.DataBase;
 
+import android.util.Log;
+
 import com.example.rasam.bookhubadmins.contactUs.entity.ContactUsDAO;
 import com.example.rasam.bookhubadmins.contactUs.presenter.ContactUsState;
 import com.example.rasam.bookhubadmins.historyManager.entity.HistoryDataBaseManger;
@@ -26,14 +28,11 @@ public class DAQ implements AuthKeyDAO,MainDataBaseActions,ContactUsDAO,HistoryD
         try {
             List<AuthKey> authKeys = SQLite.select().
                     from(AuthKey.class).queryList();
-            if (authKeys.size() != 0) {
-                dataBaseModel = new DataBaseModel<>(authKeys.get(0), true);
-                onDone.onDone(dataBaseModel);
-            } else {
-                onDone.onDone(new DataBaseModel<AuthKey>(null, true));
-            }
+            dataBaseModel = new DataBaseModel<>(authKeys.get(0), true);
+            onDone.onDone(dataBaseModel);
         } catch (Exception e) {
-            onDone.onDone(new DataBaseModel<>(e.getCause()));
+
+
         }
 
     }

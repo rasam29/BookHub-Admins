@@ -162,14 +162,18 @@ class MainActivity : MainView, ParentActivity<MainView, MainPresenter>(), OnSwip
 
     override fun refreshList(adsList: MutableList<Ads>?) {
 
-        swipeRefreshLayout.isRefreshing = false
+       try {
+           swipeRefreshLayout.isRefreshing = false
+       }catch (e:Exception){
+           e.printStackTrace()
+       }
         adapter.refreshList(adsList)
 
     }
 
     override fun onStop() {
         super.onStop()
-        presenter.detachView()
+
     }
 
     fun deleteAds(ads: Ads) {

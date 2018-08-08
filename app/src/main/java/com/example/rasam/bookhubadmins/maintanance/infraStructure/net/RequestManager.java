@@ -61,33 +61,29 @@ public class RequestManager implements SplashRequests, AuthKeyRequests, ReportVe
 
     @Override
     public void deleteAds(String token,String adsId, OnRequestDone<Void> onRequestDone) {
-        delay(() -> {
+
             onRequestDone.onResponse(new ResponseModel<>(200, null));
-        });
+
 
     }
 
     @Override
     public void promoteAds(String token,String adsId, OnRequestDone<Void> onRequestDone) {
-        delay(() -> {
+
             onRequestDone.onResponse(new ResponseModel<>(200, null));
-        });
+
     }
 
     @Override
     public void refreshList(String token,OnRequestDone<List<Ads>> onRequestDone) {
-       delay(() -> {
-           onRequestDone.onResponse(new ResponseModel<>(200, getMockAds()));
-       });
+       delay(() -> onRequestDone.onResponse(new ResponseModel<>(200, getMockAds())));
 
     }
 
     @Override
     public void getNextPsge(String token,int lastItem, OnRequestDone<List<Ads>> onRequestDone) {
 
-       delay(() -> {
-           onRequestDone.onResponse(new ResponseModel<>(200, getMockAds()));
-       });
+       delay(() -> onRequestDone.onResponse(new ResponseModel<>(200, getMockAds())));
 
     }
 

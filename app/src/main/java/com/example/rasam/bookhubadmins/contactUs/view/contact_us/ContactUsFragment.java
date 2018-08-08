@@ -26,23 +26,23 @@ import butterknife.OnClick;
 public class ContactUsFragment extends ParentFragment<ContactUsView,ContactUsPresenter> implements ContactUsView {
 
 
-//    @BindView(R.id.MainMassage)
-//    EditText mainMassage;
-//
-//
-//    @BindView(R.id.subjectEditTxt)
-//    EditText subjectEditTxt;
+    @BindView(R.id.MainMassage)
+    EditText mainMassage;
 
-//    @OnClick(R.id.sendButton_contactUs)
-//    public void SendButton(){
-//        if (subjectEditTxt.getText().toString().isEmpty()){
-//            subjectEditTxt.setError("لطفا موضوع را وارد کنید");
-//        }else if (mainMassage.getText().toString().isEmpty()){
-//            subjectEditTxt.setError("لطفا متن را وارد کنید");
-//        }else {
-//            presenter.sendMassageToServer(mainMassage.getText().toString(),subjectEditTxt.getText().toString());
-//        }
-//    }
+
+    @BindView(R.id.subjectEditTxt)
+    EditText subjectEditTxt;
+
+    @OnClick(R.id.sendButton_contactUs)
+    public void SendButton(){
+        if (subjectEditTxt.getText().toString().isEmpty()){
+            subjectEditTxt.setError("لطفا موضوع را وارد کنید");
+        }else if (mainMassage.getText().toString().isEmpty()){
+            subjectEditTxt.setError("لطفا متن را وارد کنید");
+        }else {
+            presenter.sendMassageToServer(mainMassage.getText().toString(),subjectEditTxt.getText().toString());
+        }
+    }
 
 
     @Override
@@ -54,7 +54,7 @@ public class ContactUsFragment extends ParentFragment<ContactUsView,ContactUsPre
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_contact_us, container, false);
-
+        ButterKnife.bind(this,view);
         return view;
     }
 

@@ -2,6 +2,7 @@ package com.example.rasam.bookhubadmins.contactUs.view.history;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,6 +17,7 @@ import com.example.rasam.bookhubadmins.contactUs.presenter.ContactUsPresenter;
 import com.example.rasam.bookhubadmins.contactUs.presenter.ContactUsState;
 import com.example.rasam.bookhubadmins.contactUs.view.contact_us.ContactUsView;
 import com.example.rasam.bookhubadmins.contactUs.view.history.list.ReportHistoryAdapter;
+import com.example.rasam.bookhubadmins.maintanance.parent.ParentActivity;
 import com.example.rasam.bookhubadmins.maintanance.parent.ParentFragment;
 import com.example.rasam.bookhubadmins.pojos.AdminMassageReports;
 
@@ -25,13 +27,13 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ReportsHistory extends ParentFragment<ContactUsView, ContactUsPresenter> implements ContactUsView {
+public class ReportsHistory extends Fragment {
 
-    @BindView(R.id.list)
+
     RecyclerView recyclerView;
 
 
-    @BindView(R.id.refreshLayout)
+
     SwipeRefreshLayout swipeRefreshLayout;
 
 
@@ -39,7 +41,7 @@ public class ReportsHistory extends ParentFragment<ContactUsView, ContactUsPrese
     ReportHistoryAdapter reportHistoryAdapter;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 
@@ -47,37 +49,54 @@ public class ReportsHistory extends ParentFragment<ContactUsView, ContactUsPrese
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_report_history, container, false);
-//        ButterKnife.bind(this, view);
+        recyclerView = view.findViewById(R.id.list);
+        swipeRefreshLayout = view.findViewById(R.id.refreshLayout);
 
-//        recyclerView = view.findViewById(R.id.list);
-//        swipeRefreshLayout = view.findViewById(R.id.refreshLayout);
-//        setUpRecyclerView();
-//        swipeRefreshLayout.setOnRefreshListener(() -> {
-//            presenter.getListOfMassagesHistory();
-//        });
-
+        setUpRecyclerView();
+//        reportHistoryAdapter.fillList(getHistory());
         return view;
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        presenter.getListOfMassagesHistory();
-    }
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//        presenter.getListOfMassagesHistory();
+//    }
 
-    @Override
-    public void render(ContactUsState contactUsState) {
-        if (contactUsState instanceof ContactUsState.GetHistoryState) {
-            swipeRefreshLayout.setRefreshing(false);
-            reportHistoryAdapter.fillList(((ContactUsState.GetHistoryState) contactUsState).getList());
-        } else if (contactUsState instanceof ContactUsState.OnNetError) {
-            Toast.makeText(getContext(), "خطا در ارتباط با سرور", Toast.LENGTH_SHORT).show();
-        } else throw new IllegalArgumentException();
-    }
+//    @Override
+//    public void render(ContactUsState contactUsState) {
+//       if (contactUsState instanceof ContactUsState.GetHistoryState) {
+//           swipeRefreshLayout.setRefreshing(false);
+//           reportHistoryAdapter.fillList(((ContactUsState.GetHistoryState) contactUsState).getList());
+//       } else if (contactUsState instanceof ContactUsState.OnNetError) {
+//           Toast.makeText(getContext(), "خطا در ارتباط با سرور", Toast.LENGTH_SHORT).show();
+//       } else throw new IllegalArgumentException();
+//    }
+//
+//    @Override
+//    public HistoryPresenter stableshPresenter() {
+//        return new HistoryPresenter(this, ContactDependency.inject());
+//    }
 
-    @Override
-    public ContactUsPresenter stableshPresenter() {
-        return new ContactUsPresenter(this, ContactDependency.inject());
+    public List<AdminMassageReports> getHistory(){
+        //todo change whenever the back end is ready
+
+        List<AdminMassageReports> list = new ArrayList<>();
+        list.add(new AdminMassageReports("مشکل ارسال دلیل","نمی توانم پیام ارسال کنم",true,"چه کنم داداش"));
+        list.add(new AdminMassageReports("مشکل ارسال دلیل","نمی توانم پیام ارسال کنم",true,"چه کنم داداش"));
+        list.add(new AdminMassageReports("مشکل ارسال دلیل","نمی توانم پیام ارسال کنم",true,"چه کنم داداش"));
+        list.add(new AdminMassageReports("مشکل ارسال دلیل","نمی توانم پیام ارسال کنم",true,"چه کنم داداش"));
+        list.add(new AdminMassageReports("مشکل ارسال دلیل","نمی توانم پیام ارسال کنم",true,"چه کنم داداش"));
+        list.add(new AdminMassageReports("مشکل ارسال دلیل","نمی توانم پیام ارسال کنم",true,"چه کنم داداش"));
+        list.add(new AdminMassageReports("مشکل ارسال دلیل","نمی توانم پیام ارسال کنم",true,"چه کنم داداش"));
+        list.add(new AdminMassageReports("مشکل ارسال دلیل","نمی توانم پیام ارسال کنم",true,"چه کنم داداش"));
+        list.add(new AdminMassageReports("مشکل ارسال دلیل","نمی توانم پیام ارسال کنم",true,"چه کنم داداش"));
+        list.add(new AdminMassageReports("مشکل ارسال دلیل","نمی توانم پیام ارسال کنم",true,"چه کنم داداش"));
+        list.add(new AdminMassageReports("مشکل ارسال دلیل","نمی توانم پیام ارسال کنم",true,"چه کنم داداش"));
+        list.add(new AdminMassageReports("مشکل ارسال دلیل","نمی توانم پیام ارسال کنم",true,"چه کنم داداش"));
+        list.add(new AdminMassageReports("مشکل ارسال دلیل","نمی توانم پیام ارسال کنم",true,"چه کنم داداش"));
+        list.add(new AdminMassageReports("مشکل ارسال دلیل","نمی توانم پیام ارسال کنم",true,"چه کنم داداش"));
+        return list;
     }
 
     public void setUpRecyclerView() {

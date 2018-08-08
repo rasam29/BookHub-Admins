@@ -24,7 +24,7 @@ public class ContactusPagerAdapter extends FragmentStatePagerAdapter {
         Fragment fragment = null;
         switch (position) {
             case 0:
-                fragment =  new ReportsHistory();
+                fragment =  new ContactUsFragment();
                 break;
             case 1:
                 fragment = new ReportsHistory() ;

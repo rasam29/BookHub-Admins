@@ -68,12 +68,12 @@ public class HistoryIntractorTest {
     private void setUp_ok()  {
         simpleAdvertismentAction = new SimpleAdvertismentAction() {
             @Override
-            public void deleteAds(String adsId, OnRequestDone<Void> onRequestDone) {
+            public void deleteAds(String token,String adsId, OnRequestDone<Void> onRequestDone) {
                 onRequestDone.onResponse(new ResponseModel<Void>(200, null));
             }
 
             @Override
-            public void promoteAds(String adsId, OnRequestDone<Void> onRequestDone) {
+            public void promoteAds(String token,String adsId, OnRequestDone<Void> onRequestDone) {
                 onRequestDone.onResponse(new ResponseModel<Void>(200, null));
             }
         };
@@ -109,12 +109,12 @@ public class HistoryIntractorTest {
     private void setUp_netError() {
         simpleAdvertismentAction = new SimpleAdvertismentAction() {
             @Override
-            public void deleteAds(String adsId, OnRequestDone<Void> onRequestDone) {
+            public void deleteAds(String token,String adsId, OnRequestDone<Void> onRequestDone) {
                 onRequestDone.onResponse(new ResponseModel<Void>(new Throwable()));
             }
 
             @Override
-            public void promoteAds(String adsId, OnRequestDone<Void> onRequestDone) {
+            public void promoteAds(String token,String adsId, OnRequestDone<Void> onRequestDone) {
                 onRequestDone.onResponse(new ResponseModel<Void>(new Throwable()));
             }
         };
@@ -135,12 +135,12 @@ public class HistoryIntractorTest {
     private void setUp_addExpired(){
         simpleAdvertismentAction = new SimpleAdvertismentAction() {
             @Override
-            public void deleteAds(String adsId, OnRequestDone<Void> onRequestDone) {
+            public void deleteAds(String token,String adsId, OnRequestDone<Void> onRequestDone) {
                 onRequestDone.onResponse(new ResponseModel<Void>(205,null));
             }
 
             @Override
-            public void promoteAds(String adsId, OnRequestDone<Void> onRequestDone) {
+            public void promoteAds(String token,String adsId, OnRequestDone<Void> onRequestDone) {
                 onRequestDone.onResponse(new ResponseModel<Void>(205,null));
 
             }
