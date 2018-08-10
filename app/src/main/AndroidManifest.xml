@@ -28,6 +28,7 @@
         <activity android:name=".historyManager.view.deleted.DeletedHistoryActivity" />
         <activity android:name=".historyManager.view.promoted.PromotedHistoryActivity" />
         <activity android:name=".contactUs.view.ContactUsActivity" />
+        <activity android:name=".historyManager.view.HistoryActivity" />
     </application>
 
 </manifest>

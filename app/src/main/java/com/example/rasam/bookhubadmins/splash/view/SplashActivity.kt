@@ -11,13 +11,11 @@ import com.example.rasam.bookhubadmins.auth.view.RegisterActivity
 import com.example.rasam.bookhubadmins.main.view.MainActivity
 import com.example.rasam.bookhubadmins.maintanance.infraStructure.DataBase.DAQ
 import com.example.rasam.bookhubadmins.maintanance.infraStructure.net.RequestManager
-import com.example.rasam.bookhubadmins.maintanance.parent.ParentActivity
+import com.example.rasam.bookhubadmins.maintanance.parent.androidComponent.ParentActivity
 import com.example.rasam.bookhubadmins.pojos.UpdateModel
 import com.example.rasam.bookhubadmins.splash.Bussiness.SplashViewState
 import com.example.rasam.bookhubadmins.splash.Bussiness.interactor.SplashIntractor
 import com.example.rasam.bookhubadmins.splash.Presenter.SplashPresenter
-import android.animation.AnimatorInflater
-import android.animation.AnimatorSet
 import android.content.Context
 import android.view.animation.AnimationUtils
 import android.widget.ImageView

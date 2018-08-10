@@ -45,62 +45,26 @@ public class ReportIntractorTest {
 
     @Test
     public void sendCodeToServer_codeWrong() {
-        reportVerificationRequest = new ReportVerificationRequest() {
-            @Override
-            public void verifyReport(ReportVerificationModel reportModel, OnRequestDone<String> onRequestDone) {
-                onRequestDone.onResponse(new ResponseModel<String>(203,"adssdf"));
-            }
-        };
+        reportVerificationRequest = (reportModel, onRequestDone) -> onRequestDone.onResponse(new ResponseModel<String>(203,"adssdf"));
         reportIntractorImple = new ReportIntractorImple(reportVerificationRequest,authKeyDAO);
-        reportIntractorImple.sendCodeToServer(null, new OnIntractor<ReportViewState>() {
-            @Override
-            public void onDone(ReportViewState viewState) {
-                assertTrue(viewState instanceof ReportViewState.OnCodeWrong);
-            }
-        });
+        reportIntractorImple.sendCodeToServer(null, viewState -> assertTrue(viewState instanceof ReportViewState.OnCodeWrong));
 
 
     }
 
     @Test
     public void sendCodeToServer_ok() {
-        reportVerificationRequest = new ReportVerificationRequest() {
-            @Override
-            public void verifyReport(ReportVerificationModel reportModel, OnRequestDone<String> onRequestDone) {
-                onRequestDone.onResponse(new ResponseModel<String>(200,"dfadfasf"));
-            }
-        };
+        reportVerificationRequest = (reportModel, onRequestDone) -> onRequestDone.onResponse(new ResponseModel<String>(200,"dfadfasf"));
         reportIntractorImple = new ReportIntractorImple(reportVerificationRequest,authKeyDAO);
-        reportIntractorImple.sendCodeToServer(null, new OnIntractor<ReportViewState>() {
-            @Override
-            public void onDone(ReportViewState viewState) {
-                reportIntractorImple.saveTokenToDataBase("myToken", new OnIntractor<ReportViewState>() {
-                    @Override
-                    public void onDone(ReportViewState viewState) {
-                        assertTrue(viewState instanceof ReportViewState.OnCodeOk);
-                    }
-                });
-
-            }
-        });
+        reportIntractorImple.sendCodeToServer(null, viewState -> reportIntractorImple.saveTokenToDataBase("myToken", viewState1 -> assertTrue(viewState1 instanceof ReportViewState.OnCodeOk)));
     }
 
 
     @Test
     public void sendCodeToServer_OnNetError() {
-        reportVerificationRequest = new ReportVerificationRequest() {
-            @Override
-            public void verifyReport(ReportVerificationModel reportModel, OnRequestDone<String> onRequestDone) {
-                onRequestDone.onResponse(new ResponseModel<String>(new Throwable()));
-            }
-        };
+        reportVerificationRequest = (reportModel, onRequestDone) -> onRequestDone.onResponse(new ResponseModel<String>(new Throwable()));
         reportIntractorImple = new ReportIntractorImple(reportVerificationRequest,authKeyDAO);
-        reportIntractorImple.sendCodeToServer(null, new OnIntractor<ReportViewState>() {
-            @Override
-            public void onDone(ReportViewState viewState) {
-                assertTrue(viewState instanceof ReportViewState.OnNetError);
-            }
-        });
+        reportIntractorImple.sendCodeToServer(null, viewState -> assertTrue(viewState instanceof ReportViewState.OnNetError));
     }
 
 

@@ -17,7 +17,7 @@ import com.example.rasam.bookhubadmins.auth.fragments.AuthKeyVerification.presen
 import com.example.rasam.bookhubadmins.auth.fragments.BlockedFragment
 import com.example.rasam.bookhubadmins.auth.fragments.reportVerify.view.ReportVerifyActivity
 import com.example.rasam.bookhubadmins.maintanance.infraStructure.net.RequestManager
-import com.example.rasam.bookhubadmins.maintanance.parent.ParentActivity
+import com.example.rasam.bookhubadmins.maintanance.parent.androidComponent.ParentActivity
 
 class AuthKeyActivity : ParentActivity<AuthKeyView, AuthKeyPresenter>(), AuthKeyView {
 

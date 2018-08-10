@@ -43,6 +43,8 @@ public interface SplashViewState {
             this.throwable = throwable;
         }
 
+
+
         public Throwable getThrowable() {
             return throwable;
         }

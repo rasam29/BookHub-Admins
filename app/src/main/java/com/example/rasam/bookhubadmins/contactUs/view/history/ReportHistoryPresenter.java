@@ -13,11 +13,11 @@ import com.hannesdorfmann.mosby3.mvp.MvpBasePresenter;
  * Created by R.Arabzadeh Taktell on 8/8/2018.
  */
 
-public class HistoryPresenter extends MvpBasePresenter<ContactUsView> implements OnIntractor<ContactUsState>{
+public class ReportHistoryPresenter extends MvpBasePresenter<ContactUsView> implements OnIntractor<ContactUsState>{
     ContactUsView contactUsView;
     ContactUsIntractorFacade contactUsIntractorFacade;
 
-    public HistoryPresenter(ContactUsView contactUsView, ContactUsIntractorFacade contactUsIntractorFacade) {
+    public ReportHistoryPresenter(ContactUsView contactUsView, ContactUsIntractorFacade contactUsIntractorFacade) {
         this.contactUsView = contactUsView;
         this.contactUsIntractorFacade = contactUsIntractorFacade;
     }

@@ -30,17 +30,7 @@ public class AuthKeyIntractorImpleTest {
     }
 
     private void blockCondittion() {
-        authKeyRequests = new AuthKeyRequests() {
-            @Override
-            public void sendAuthKeyToServer(AuthKeyVerify authKey, OnRequestDone<Void> onRequestDone) {
-                authKeyRequests = new AuthKeyRequests() {
-                    @Override
-                    public void sendAuthKeyToServer(AuthKeyVerify authKey, OnRequestDone<Void> onRequestDone) {
-                        onRequestDone.onResponse(new ResponseModel<Void>(401, null));
-                    }
-                };
-            }
-        };
+        authKeyRequests = (authKey, onRequestDone) -> authKeyRequests = (authKey1, onRequestDone1) -> onRequestDone1.onResponse(new ResponseModel<Void>(401, null));
         authKeyIntractorImple = new AuthKeyIntractorImple(authKeyRequests);
 
     }
@@ -90,24 +80,14 @@ public class AuthKeyIntractorImpleTest {
     @Test
     public void validationAndVerify_userBlocked() {
         blockCondittion();
-        authKeyIntractorImple.validationAndVerify(new AuthKeyVerify(null,null,""), new OnIntractor<AuthKeyViewState>() {
-            @Override
-            public void onDone(AuthKeyViewState viewState) {
-                assertTrue(viewState instanceof AuthKeyViewState.OnUserMoreThan3Attemts);
-            }
-        });
+        authKeyIntractorImple.validationAndVerify(new AuthKeyVerify(null,null,""), viewState -> assertTrue(viewState instanceof AuthKeyViewState.OnUserMoreThan3Attemts));
 
     }
 
     @Test
     public void validationAndVerify_AuthKeyWrong() {
         authKeyWrongConditions();
-        authKeyIntractorImple.validationAndVerify(new AuthKeyVerify(null,null,""), new OnIntractor<AuthKeyViewState>() {
-            @Override
-            public void onDone(AuthKeyViewState viewState) {
-                assertTrue(viewState instanceof AuthKeyViewState.OnAuthKeyNotFound);
-            }
-        });
+        authKeyIntractorImple.validationAndVerify(new AuthKeyVerify(null,null,""), viewState -> assertTrue(viewState instanceof AuthKeyViewState.OnAuthKeyNotFound));
     }
 
     @Test

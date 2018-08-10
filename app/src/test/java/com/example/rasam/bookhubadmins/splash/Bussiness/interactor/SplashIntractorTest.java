@@ -29,7 +29,7 @@ public class SplashIntractorTest {
 
 
 
-    private SplashIntractorFacade splashIntractor;
+    private SplashIntractor splashIntractor;
 
 
     @Test

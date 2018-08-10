@@ -2,15 +2,10 @@ package com.example.rasam.bookhubadmins.contactUs.view.utils;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import com.example.rasam.bookhubadmins.TestFragment;
 import com.example.rasam.bookhubadmins.contactUs.view.contact_us.ContactUsFragment;
 import com.example.rasam.bookhubadmins.contactUs.view.history.ReportsHistory;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class ContactusPagerAdapter extends FragmentStatePagerAdapter {
 

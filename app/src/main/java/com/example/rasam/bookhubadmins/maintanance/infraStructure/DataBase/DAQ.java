@@ -1,9 +1,6 @@
 package com.example.rasam.bookhubadmins.maintanance.infraStructure.DataBase;
 
-import android.util.Log;
-
 import com.example.rasam.bookhubadmins.contactUs.entity.ContactUsDAO;
-import com.example.rasam.bookhubadmins.contactUs.presenter.ContactUsState;
 import com.example.rasam.bookhubadmins.historyManager.entity.HistoryDataBaseManger;
 import com.example.rasam.bookhubadmins.main.entity.MainDataBaseActions;
 import com.example.rasam.bookhubadmins.maintanance.abstractions.OnDAOJobFinish;
@@ -14,7 +11,7 @@ import com.raizlabs.android.dbflow.sql.language.SQLite;
 
 import java.util.List;
 
-public class DAQ implements AuthKeyDAO,MainDataBaseActions,ContactUsDAO,HistoryDataBaseManger{
+public class DAQ implements AuthKeyDAO, MainDataBaseActions, ContactUsDAO, HistoryDataBaseManger {
 
 
     @Override
@@ -28,8 +25,13 @@ public class DAQ implements AuthKeyDAO,MainDataBaseActions,ContactUsDAO,HistoryD
         try {
             List<AuthKey> authKeys = SQLite.select().
                     from(AuthKey.class).queryList();
-            dataBaseModel = new DataBaseModel<>(authKeys.get(0), true);
-            onDone.onDone(dataBaseModel);
+            if (authKeys.size() > 0) {
+                onDone.onDone(new DataBaseModel<>(authKeys.get(0),true));
+            } else if (authKeys.size() == 0) {
+                onDone.onDone(new DataBaseModel<>(null,true));
+            } else {
+                throw new IllegalArgumentException();
+            }
         } catch (Exception e) {
 
 
@@ -39,10 +41,15 @@ public class DAQ implements AuthKeyDAO,MainDataBaseActions,ContactUsDAO,HistoryD
 
     @Override
     public void insertAuthKey(String token, OnDAOJobFinish<AuthKey> onDAO) {
-        AuthKey authKey = new AuthKey(token);
         try {
-            authKey.save();
-            onDAO.onDone(new DataBaseModel<AuthKey>(authKey, true));
+            AuthKey authKey = new AuthKey(token);
+            if (authKey.exists()){
+                authKey.update();
+            }else {
+                authKey.save();
+            }
+
+            onDAO.onDone(new DataBaseModel<>(authKey, true));
         } catch (Exception e) {
             e.printStackTrace();
             onDAO.onDone(new DataBaseModel<>(e.getCause()));
@@ -56,7 +63,7 @@ public class DAQ implements AuthKeyDAO,MainDataBaseActions,ContactUsDAO,HistoryD
             ads.setPromoted(false);
             ads.save();
             onDAOJobFinish.onDone(new DataBaseModel<Void>(true));
-        }catch (Exception e){
+        } catch (Exception e) {
             onDAOJobFinish.onDone(new DataBaseModel<Void>(e.getCause()));
         }
     }
@@ -67,12 +74,10 @@ public class DAQ implements AuthKeyDAO,MainDataBaseActions,ContactUsDAO,HistoryD
             ads.setPromoted(true);
             ads.save();
             onDAOJobFinish.onDone(new DataBaseModel<Void>(true));
-        }catch (Exception e){
+        } catch (Exception e) {
             onDAOJobFinish.onDone(new DataBaseModel<Void>(e.getCause()));
         }
     }
-
-
 
 
     @Override

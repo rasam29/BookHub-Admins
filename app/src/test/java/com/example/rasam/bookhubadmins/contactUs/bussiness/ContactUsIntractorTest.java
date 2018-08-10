@@ -4,7 +4,6 @@ import com.example.rasam.bookhubadmins.contactUs.entity.ContactUSRequest;
 import com.example.rasam.bookhubadmins.contactUs.entity.ContactUsDAO;
 import com.example.rasam.bookhubadmins.contactUs.presenter.ContactUsState;
 import com.example.rasam.bookhubadmins.maintanance.abstractions.OnDAOJobFinish;
-import com.example.rasam.bookhubadmins.maintanance.abstractions.OnIntractor;
 import com.example.rasam.bookhubadmins.maintanance.abstractions.OnRequestDone;
 import com.example.rasam.bookhubadmins.maintanance.infraStructure.DataBase.AuthKeyDAO;
 import com.example.rasam.bookhubadmins.maintanance.infraStructure.DataBase.DataBaseModel;
@@ -13,15 +12,12 @@ import com.example.rasam.bookhubadmins.pojos.AdminMassageReports;
 import com.example.rasam.bookhubadmins.pojos.AuthKey;
 import com.example.rasam.bookhubadmins.pojos.ContactUsMassagePayLoad;
 
-import junit.framework.Assert;
-
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
 
 /**
@@ -48,7 +44,7 @@ public class ContactUsIntractorTest {
 
             @Override
             public void getAuthKey(OnDAOJobFinish<AuthKey> onDone) {
-                onDone.onDone(new DataBaseModel<AuthKey>(new AuthKey("Bearer sdlfj'sjrenfbg"),true));
+                onDone.onDone(new DataBaseModel<AuthKey>(new AuthKey("Bearer sdlfj'sjrenfbg"), true));
             }
 
             @Override
@@ -72,7 +68,7 @@ public class ContactUsIntractorTest {
 
         };
 
-        contactUsIntractor = new ContactUsIntractor(contactUsDAO, contactUSRequest,authKeyDAO);
+        contactUsIntractor = new ContactUsIntractor(contactUsDAO, contactUSRequest, authKeyDAO);
     }
 
     void stressCondition() {
@@ -89,7 +85,7 @@ public class ContactUsIntractorTest {
 
 
         };
-        contactUsIntractor = new ContactUsIntractor(contactUsDAO, contactUSRequest,authKeyDAO);
+        contactUsIntractor = new ContactUsIntractor(contactUsDAO, contactUSRequest, authKeyDAO);
 
     }
 
@@ -108,7 +104,7 @@ public class ContactUsIntractorTest {
     }
 
     @Test
-    public void getMassagesHistory_Ok(){
+    public void getMassagesHistory_Ok() {
         onOk();
         contactUsIntractor.getMssagesHistory(viewState -> {
             assertTrue(viewState instanceof ContactUsState.GetHistoryState);
@@ -116,17 +112,17 @@ public class ContactUsIntractorTest {
     }
 
     @Test
-    public void getMassagesHistory_NetError(){
+    public void getMassagesHistory_NetError() {
         stressCondition();
         contactUsIntractor.getMssagesHistory(viewState -> {
             assertTrue(viewState instanceof ContactUsState.OnNetError);
         });
     }
 
-    public List<AdminMassageReports> getMassages(){
-        AdminMassageReports adminMassageReports = new AdminMassageReports("bug","you have bug",true,"we have fixed the problem");
+    public List<AdminMassageReports> getMassages() {
+        AdminMassageReports adminMassageReports = new AdminMassageReports("bug", "you have bug", true, "we have fixed the problem");
         List<AdminMassageReports> list = new ArrayList<>();
-        for (int i = 0;i<20;i++){
+        for (int i = 0; i < 20; i++) {
             list.add(adminMassageReports);
         }
         return list;

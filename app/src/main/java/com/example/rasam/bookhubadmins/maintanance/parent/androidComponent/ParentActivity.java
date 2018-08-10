@@ -1,4 +1,4 @@
-package com.example.rasam.bookhubadmins.maintanance.parent;
+package com.example.rasam.bookhubadmins.maintanance.parent.androidComponent;
 
 import android.content.Context;
 import android.os.Bundle;

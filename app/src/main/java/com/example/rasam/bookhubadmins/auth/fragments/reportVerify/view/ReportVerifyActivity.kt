@@ -14,7 +14,7 @@ import com.example.rasam.bookhubadmins.auth.fragments.reportVerify.presenter.Rep
 import com.example.rasam.bookhubadmins.main.view.MainActivity
 import com.example.rasam.bookhubadmins.maintanance.infraStructure.DataBase.DAQ
 import com.example.rasam.bookhubadmins.maintanance.infraStructure.net.RequestManager
-import com.example.rasam.bookhubadmins.maintanance.parent.ParentActivity
+import com.example.rasam.bookhubadmins.maintanance.parent.androidComponent.ParentActivity
 
 class ReportVerifyActivity : ParentActivity<ReportVerifyView, ReportVerificationPresenter>(), ReportVerifyView, TextWatcher {
     var context = this

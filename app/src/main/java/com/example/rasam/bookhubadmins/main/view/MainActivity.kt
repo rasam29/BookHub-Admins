@@ -21,7 +21,7 @@ import com.example.rasam.bookhubadmins.main.presenter.MainDependency
 import com.example.rasam.bookhubadmins.main.presenter.MainPresenter
 import com.example.rasam.bookhubadmins.main.view.mainList.MainAdapter
 import com.example.rasam.bookhubadmins.main.view.mainList.OnSwipeData
-import com.example.rasam.bookhubadmins.maintanance.parent.ParentActivity
+import com.example.rasam.bookhubadmins.maintanance.parent.androidComponent.ParentActivity
 import com.example.rasam.bookhubadmins.pojos.ads.Ads
 import com.example.rasam.bookhubadmins.productInfo.view.MoreDetailsActivity
 import java.util.*
@@ -57,7 +57,7 @@ class MainActivity : MainView, ParentActivity<MainView, MainPresenter>(), OnSwip
 
         contactUs = findViewById(R.id.contactUsContainer)
         contactUs.setOnClickListener {
-            startActivity(Intent(this, ContactUsActivity::class.java))
+            startActivity(Intent(context, ContactUsActivity::class.java))
         }
 
         hambIcon = findViewById(R.id.hamburgerIcon)
@@ -148,7 +148,7 @@ class MainActivity : MainView, ParentActivity<MainView, MainPresenter>(), OnSwip
 
     override fun onItemClick(view: View?, adsItem: Ads?) {
         presenter.cachAdvertisment(adsItem)
-        startActivity(Intent(this, MoreDetailsActivity::class.java))
+        startActivity(Intent(context, MoreDetailsActivity::class.java))
     }
 
     fun showLoadingInList() {
@@ -171,10 +171,6 @@ class MainActivity : MainView, ParentActivity<MainView, MainPresenter>(), OnSwip
 
     }
 
-    override fun onStop() {
-        super.onStop()
-
-    }
 
     fun deleteAds(ads: Ads) {
         adapter.delete(ads)

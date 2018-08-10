@@ -5,7 +5,6 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -13,7 +12,7 @@ import com.example.rasam.bookhubadmins.R;
 import com.example.rasam.bookhubadmins.contactUs.presenter.ContactDependency;
 import com.example.rasam.bookhubadmins.contactUs.presenter.ContactUsPresenter;
 import com.example.rasam.bookhubadmins.contactUs.presenter.ContactUsState;
-import com.example.rasam.bookhubadmins.maintanance.parent.ParentFragment;
+import com.example.rasam.bookhubadmins.maintanance.parent.androidComponent.ParentFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

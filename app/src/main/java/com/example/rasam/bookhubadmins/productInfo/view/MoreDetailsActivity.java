@@ -1,18 +1,13 @@
 package com.example.rasam.bookhubadmins.productInfo.view;
 
 import android.os.Bundle;
-import android.support.design.widget.CoordinatorLayout;
-import android.view.View;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 import com.example.rasam.bookhubadmins.R;
-import com.example.rasam.bookhubadmins.maintanance.parent.ParentActivity;
+import com.example.rasam.bookhubadmins.maintanance.parent.androidComponent.ParentActivity;
 import com.example.rasam.bookhubadmins.productInfo.presenter.MoreDependency;
 import com.example.rasam.bookhubadmins.productInfo.presenter.MoreDetailsPresenter;
 import com.example.rasam.bookhubadmins.productInfo.presenter.MoreDetailsState;
-
-import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by R.Arabzadeh Taktell on 7/23/2018.

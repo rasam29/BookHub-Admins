@@ -4,12 +4,13 @@ import com.example.rasam.bookhubadmins.historyManager.bussiness.HistoryIntractor
 import com.example.rasam.bookhubadmins.historyManager.view.HistoryView;
 import com.example.rasam.bookhubadmins.maintanance.abstractions.OnIntractor;
 import com.hannesdorfmann.mosby3.mvp.MvpBasePresenter;
+import com.hannesdorfmann.mosby3.mvp.MvpView;
 
 /**
  * Created by R.Arabzadeh Taktell on 7/28/2018.
  */
 
-public class HistoryPresenter extends MvpBasePresenter<HistoryView> implements OnIntractor<HistoryState>{
+public class HistoryPresenter extends MvpBasePresenter<HistoryView> implements OnIntractor<HistoryState> {
     HistoryView historyView;
     HistoryIntractor historyIntractor;
 

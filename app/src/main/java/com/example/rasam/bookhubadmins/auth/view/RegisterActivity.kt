@@ -20,7 +20,7 @@ import com.example.rasam.bookhubadmins.auth.fragments.BlockedFragment
 import com.example.rasam.bookhubadmins.auth.presenter.RegisterPresenter
 
 import com.example.rasam.bookhubadmins.maintanance.infraStructure.net.RequestManager
-import com.example.rasam.bookhubadmins.maintanance.parent.ParentActivity
+import com.example.rasam.bookhubadmins.maintanance.parent.androidComponent.ParentActivity
 
 class RegisterActivity : ParentActivity<RegisterView, RegisterPresenter>(), RegisterView {
 
